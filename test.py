@@ -1,5 +1,6 @@
 import networkx as nx
 import osmnx as ox
+import gps_module.address as gps
 import requests
 from matplotlib import pyplot as plt
 import matplotlib.cm as cm
@@ -32,13 +33,8 @@ G2 = ox.graph_from_place(
     network_type='drive',
 )
 
-geolocator = Nominatim()
-
-origin = geolocator.geocode(origin_name)
-destination = geolocator.geocode(destination_name)
-
-originX, originY = origin.longitude, origin.latitude
-destinationX, destinationY = destination.longitude, destination.latitude
+originX, originY = gps.gps_from_address(origin_name)
+destinationX, destinationY = gps.gps_from_address(destination_name)
 
 print((originX, originY))
 print((destinationX, destinationY))
