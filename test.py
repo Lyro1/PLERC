@@ -1,6 +1,7 @@
 import networkx as nx
 import osmnx as ox
 import gps_module.address as gps
+import linear_program_module.matrix as lp
 ox.config(use_cache=True, log_console=True)
 ox.__version__
 
@@ -32,9 +33,11 @@ destinationX, destinationY = gps.gps_from_address(destination_name)
 print((originX, originY))
 print((destinationX, destinationY))
 
+print("Testing matrix...")
+print(lp.build_matrix_dictionary(G2.nodes))
+
 origin_node = ox.get_nearest_node(G2, (originY, originX), method='euclidean')
 destination_node = ox.get_nearest_node(G2, (destinationY, destinationX), method='euclidean')
 
 route = nx.shortest_path(G2, origin_node, destination_node, weight='length')
 fig, ax = ox.plot_graph_route(G2, route, fig_height=20, fig_width=20)
-
