@@ -7,6 +7,6 @@ def gps_from_address(address):
 
 def address_from_gps(latitude, longitude):
     geo_locator = Nominatim()
-    location = geo_locator.reverse(longitude + ", " + latitude)
+    location = geo_locator.reverse(str(latitude) + ", " + str(longitude))
     return location.address
 
