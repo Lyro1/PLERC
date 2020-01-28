@@ -47,5 +47,5 @@ city_name = 'Biars-Sur-Cere'
 
 fig, ax = color.color_way(G2, way, orig_dest_points=[(originY, originX), (destinationY, destinationX)])
 
-route = nx.shortest_path(G2, origin_node, destination_node, weight='length')
-fig, ax = ox.plot_graph_route(G2, route, fig_height=20, fig_width=20)
+#route = nx.shortest_path(G2, origin_node, destination_node, weight='length')
+#fig, ax = ox.plot_graph_route(G2, route, fig_height=20, fig_width=20)
