@@ -37,7 +37,7 @@ def get_edges(G):
     for edge in list(G.edges(data=True)):
         maxspeed = 50
         if "maxspeed" in edge[2]:
-            maxspeed = edge[2]["maxspeed"]
+            maxspeed = int(edge[2]["maxspeed"])
         length = edge[2]['length']
         edges.append((edge[0], edge[1], length/maxspeed))
     return edges
