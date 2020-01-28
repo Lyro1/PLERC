@@ -30,7 +30,7 @@ def build_constraints(i, j, N):
     return res
 
 def get_nodes(G):
-    return list(G.nodes())
+    return list(G.nodes(data=True))
 
 def get_edges(G):
     edges = list()
