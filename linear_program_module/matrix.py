@@ -7,7 +7,6 @@ def build_matrix_dictionary(nodes):
         i += 1
     return dictionary
 
-
 def build_different_matrices(nodes, vertices):
     dict_nodes = build_matrix_dictionary(nodes)
     dict_vertices = {}
@@ -30,3 +29,15 @@ def build_constraints(i, j, N):
     res[j] = -1
     return res
 
+def get_nodes(G):
+    return list(G.nodes())
+
+def get_edges(G):
+    edges = list()
+    for edge in list(G.edges(data=True)):
+        maxspeed = 50
+        if "maxspeed" in edge[2]:
+            maxspeed = edge[2]["maxspeed"]
+        length = edge[2]['length']
+        edges.append((edge[0], edge[1], length/maxspeed))
+    return edges
