@@ -3,6 +3,7 @@ import osmnx as ox
 import gps_module.address as gps
 import linear_program_module.matrix as lp
 import map_module.color as color
+from scipy.optimize import linprog
 ox.config(use_cache=True, log_console=True)
 ox.__version__
 
@@ -36,16 +37,24 @@ print((destinationX, destinationY))
 
 print("Testing matrix...")
 print(lp.build_matrix_dictionary(G2.nodes))
-print(G2.nodes)
 
-origin_node = ox.get_nearest_node(G2, (originY, originX), method='euclidean')
-destination_node = ox.get_nearest_node(G2, (destinationY, destinationX), method='euclidean')
+nodes = lp.get_nodes(G2)
+vertices = lp.get_edges(G2)
+M, w, dict_nodes, dict_vertices = lp.build_different_matrices(nodes, vertices)
 
-way = [3094515079, 3094515080, 3094515082, 3094515083]
+origin_node = dict_nodes[ox.get_nearest_node(G2, (originY, originX), method='euclidean')]
+destination_node = dict_nodes[ox.get_nearest_node(G2, (destinationY, destinationX), method='euclidean')]
 
-city_name = 'Biars-Sur-Cere'
+res = lp.build_constraints(origin_node, destination_node, len(nodes))
 
-fig, ax = color.color_way(G2, way, orig_dest_points=[(originY, originX), (destinationY, destinationX)])
-
-#route = nx.shortest_path(G2, origin_node, destination_node, weight='length')
-#fig, ax = ox.plot_graph_route(G2, route, fig_height=20, fig_width=20)
+a = linprog(c=w, A_eq=M, b_eq=res)
+path = [i for i in map(round,a.x)]
+chemin = []
+for j in range(len(path)):
+    if path[j] == 1:
+        chemin.append(vertices[j])
+print(chemin)
+"""
+route = nx.shortest_path(G2, origin_node, destination_node, weight='length')
+fig, ax = ox.plot_graph_route(G2, route, fig_height=20, fig_width=20)
+"""
