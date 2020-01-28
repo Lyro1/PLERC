@@ -41,11 +41,12 @@ print(G2.nodes)
 origin_node = ox.get_nearest_node(G2, (originY, originX), method='euclidean')
 destination_node = ox.get_nearest_node(G2, (destinationY, destinationX), method='euclidean')
 
-way = [3094515079, 3094515080, 3094515082, 3094515083]
+way = lp.get_edges(G2)
 
 city_name = 'Biars-Sur-Cere'
 
-fig, ax = color.color_way(G2, way, orig_dest_points=[(originY, originX), (destinationY, destinationX)])
+points=[(originY, originX), (destinationY, destinationX)]
+fig, ax = color.color_way(G2, way, points[0], points[1])
 
 #route = nx.shortest_path(G2, origin_node, destination_node, weight='length')
 #fig, ax = ox.plot_graph_route(G2, route, fig_height=20, fig_width=20)
