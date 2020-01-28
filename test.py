@@ -2,6 +2,7 @@ import networkx as nx
 import osmnx as ox
 import gps_module.address as gps
 import linear_program_module.matrix as lp
+import map_module.color as color
 ox.config(use_cache=True, log_console=True)
 ox.__version__
 
@@ -35,9 +36,16 @@ print((destinationX, destinationY))
 
 print("Testing matrix...")
 print(lp.build_matrix_dictionary(G2.nodes))
+print(G2.nodes)
 
 origin_node = ox.get_nearest_node(G2, (originY, originX), method='euclidean')
 destination_node = ox.get_nearest_node(G2, (destinationY, destinationX), method='euclidean')
 
-route = nx.shortest_path(G2, origin_node, destination_node, weight='length')
-fig, ax = ox.plot_graph_route(G2, route, fig_height=20, fig_width=20)
+way = [3094515079, 3094515080, 3094515082, 3094515083]
+
+city_name = 'Biars-Sur-Cere'
+
+fig, ax = color.color_way(G2, way, orig_dest_points=[(originY, originX), (destinationY, destinationX)])
+
+#route = nx.shortest_path(G2, origin_node, destination_node, weight='length')
+#fig, ax = ox.plot_graph_route(G2, route, fig_height=20, fig_width=20)
