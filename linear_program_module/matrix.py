@@ -42,10 +42,20 @@ def get_edges(G):
         edges.append((edge[0], edge[1], length/maxspeed))
     return edges
 
-def sort_path(path, source):
+def get_path(lp, vertices):
+    path = [i for i in map(round, lp.x)]
+    chemin = []
+    for j in range(len(path)):
+        if path[j] == 1:
+            chemin.append(vertices[j])
+    return chemin
+
+def sort_path(path, source, destination):
+    res = []
     for i in range(len(path)):
         for j in range(len(path)):
             if path[j][0] == source:
-                tmp = path[i]
-                path[i] = path[j]
-                path[j] = tmp
+                res.append(path[j][0])
+                source = path[j][1]
+    res.append(destination)
+    return res

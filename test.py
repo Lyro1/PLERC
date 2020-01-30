@@ -45,22 +45,20 @@ print(nodes[destination_node][0])
 res = lp.build_constraints(origin_node, destination_node, len(nodes))
 
 a = linprog(c=w, A_eq=M, b_eq=res)
-path = [i for i in map(round,a.x)]
-chemin = []
-for j in range(len(path)):
-    if path[j] == 1:
-        chemin.append(vertices[j])
+chemin = lp.get_path(a, vertices)
 print("\nChemin :")
 print(chemin)
 
 print("\nTriage du chemin :")
-print(lp.sort_path(chemin, nodes[origin_node][0]))
+chemin = lp.sort_path(chemin, nodes[origin_node][0], nodes[destination_node][0])
+print(chemin)
 
 fastest = nx.shortest_path(G2, nodes[origin_node][0], nodes[destination_node][0], weight='length')
 print("\nFastest : ")
 print(fastest)
 
-print(type(fastest))
-fig, ax = ox.plot_graph_route(G2, fastest, fig_height=20, fig_width=20)
+print()
+
+fig, ax = ox.plot_graph_route(G2, chemin, fig_height=20, fig_width=20)
 #fig, ax = ox.plot_graph_route(G2, chemin, fig_height=20, fig_width=20)
 
