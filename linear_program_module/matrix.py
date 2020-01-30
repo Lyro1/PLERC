@@ -41,3 +41,11 @@ def get_edges(G):
         length = edge[2]['length']
         edges.append((edge[0], edge[1], length/maxspeed))
     return edges
+
+def sort_path(path, source):
+    for i in range(len(path)):
+        for j in range(len(path)):
+            if path[j][0] == source:
+                tmp = path[i]
+                path[i] = path[j]
+                path[j] = tmp
