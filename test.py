@@ -1,11 +1,7 @@
-import networkx as nx
 import osmnx as ox
 import gps_module.address as gps
 import linear_program_module.linear_program as lp
 
-
-import map_module.color as color
-from scipy.optimize import linprog
 ox.config(use_cache=True, log_console=True)
 ox.__version__
 
