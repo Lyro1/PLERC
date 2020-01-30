@@ -3,7 +3,7 @@ def build_matrix_dictionary(nodes):
     dictionary = {}
     i = 0
     for node in nodes:
-        dictionary[node] = i
+        dictionary[node[0]] = i
         i += 1
     return dictionary
 

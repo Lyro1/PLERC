@@ -32,12 +32,6 @@ G2 = ox.graph_from_place(
 originX, originY = gps.gps_from_address(origin_name)
 destinationX, destinationY = gps.gps_from_address(destination_name)
 
-print((originX, originY))
-print((destinationX, destinationY))
-
-print("Testing matrix...")
-print(lp.build_matrix_dictionary(G2.nodes))
-
 nodes = lp.get_nodes(G2)
 vertices = lp.get_edges(G2)
 M, w, dict_nodes, dict_vertices = lp.build_different_matrices(nodes, vertices)
@@ -53,6 +47,7 @@ chemin = []
 for j in range(len(path)):
     if path[j] == 1:
         chemin.append(vertices[j])
+print("\nChemin :")
 print(chemin)
 """
 route = nx.shortest_path(G2, origin_node, destination_node, weight='length')
