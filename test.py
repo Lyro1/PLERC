@@ -19,18 +19,15 @@ destination_name = input("Adresse d'arrivée :")
 if destination_name == "" or destination_name is None:
     destination_name = "2 rue du stade biars-sur-cere"
 
-# get a graph for some city
 G2 = ox.graph_from_place(
-    city_name,
-    simplify=False,
-    retain_all=True,
-    network_type='drive',
-)
+        city_name,
+        simplify=False,
+        retain_all=True,
+        network_type='drive',
+    )
 
 origin = gps.gps_from_address(origin_name)
 destination = gps.gps_from_address(destination_name)
-chemin=lp.get_shortest_path(G2, origin, destination)
 
-
-fig, ax = ox.plot_graph_route(G2,chemin, fig_height=20, fig_width=20)
+fig, ax = ox.plot_graph_route(G2, lp.get_shortest_path(G2, origin, destination), fig_height=20, fig_width=20)
 
