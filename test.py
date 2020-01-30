@@ -1,6 +1,7 @@
 import osmnx as ox
 import gps_module.address as gps
 import linear_program_module.linear_program as lp
+import utils.test as test
 
 ox.config(use_cache=True, log_console=True)
 ox.__version__
@@ -28,6 +29,6 @@ G2 = ox.graph_from_place(
 
 origin = gps.gps_from_address(origin_name)
 destination = gps.gps_from_address(destination_name)
-
+print(test.compare_shortest_paths(G2,origin,destination))
 fig, ax = ox.plot_graph_route(G2, lp.get_shortest_path(G2, origin, destination), fig_height=20, fig_width=20)
 
