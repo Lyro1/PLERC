@@ -8,11 +8,11 @@ import pytest
 ox.config(use_cache=True, log_console=True)
 ox.__version__
 
-city_name = 'versailles'
+city_name = 'Versailles'
+origin_name = "6 Rue des Missionnaires"
+destination_name = "32 Avenue de Paris"
 
-origin_name = "8 Rue des Missionnaires versailles"
-
-destination_name = "66 boulevard du roi versailles"
+origin_name, destination_name = origin_name + " " + city_name, destination_name + " " + city_name
 
 G2 = ox.graph_from_place(
         city_name,
@@ -20,6 +20,7 @@ G2 = ox.graph_from_place(
         retain_all=True,
         network_type='drive',
     )
+
 while True:
     try:
         origin = gps.gps_from_address(origin_name)
@@ -28,7 +29,26 @@ while True:
     except geopy.exc.GeocoderUnavailable:
         continue
 
-def test_one():
+G2_opti = ox.simplify_graph(G2)
+
+
+def test_nx_opti_shortest_path():
+    fig, ax = ox.plot_graph_route(G2_opti, test.get_nx_shortest_path(G2_opti, origin, destination), fig_height=20, fig_width=20)
+
+
+def test_nx_shortest_path():
+    fig, ax = ox.plot_graph_route(G2, test.get_nx_shortest_path(G2, origin, destination), fig_height=20, fig_width=20)
+
+
+def test_our_opti_shortest_path():
+    fig, ax = ox.plot_graph_route(G2_opti, lp.get_shortest_path(G2_opti, origin, destination), fig_height=20, fig_width=20)
+
+
+def test_our_shortest_path():
+    fig, ax = ox.plot_graph_route(G2, lp.get_shortest_path(G2, origin, destination), fig_height=20, fig_width=20)
+
+
+def test_give_same_path():
     assert test.compare_shortest_paths(G2,origin,destination)
 
 

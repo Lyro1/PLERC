@@ -2,6 +2,7 @@ import osmnx as ox
 import gps_module.address as gps
 import linear_program_module.linear_program as lp
 import geopy
+import utils.test as test
 
 ox.config(use_cache=True, log_console=True)
 ox.__version__
