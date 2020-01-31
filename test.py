@@ -29,12 +29,16 @@ destination_name = input("Adresse d'arrivée :")
 if destination_name == "" or destination_name is None:
     destination_name = "2 rue du stade biars-sur-cere"
 """
+
+print("Getting graph...")
 G2 = ox.graph_from_place(
         city_name,
         simplify=False,
         retain_all=True,
         network_type='drive',
     )
+
+print("Got graph.")
 while True:
     try:
         origin = gps.gps_from_address(origin_name)
@@ -47,5 +51,7 @@ def test_one():
     assert test.compare_shortest_paths(G2,origin,destination)
 """
 
+
+print("Solving route...")
 
 fig, ax = ox.plot_graph_route(G2, lp.get_shortest_path(G2, origin, destination), fig_height=20, fig_width=20)
