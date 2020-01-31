@@ -1,4 +1,3 @@
-
 def build_matrix_dictionary(nodes):
     dictionary = {}
     i = 0
@@ -6,6 +5,7 @@ def build_matrix_dictionary(nodes):
         dictionary[node[0]] = i
         i += 1
     return dictionary
+
 
 def build_different_matrices(nodes, vertices):
     dict_nodes = build_matrix_dictionary(nodes)
@@ -23,14 +23,17 @@ def build_different_matrices(nodes, vertices):
         k += 1
     return M, weights, dict_nodes, dict_vertices
 
+
 def build_constraints(i, j, N):
     res = [0 for x in range(N)]
     res[i] = 1
     res[j] = -1
     return res
 
+
 def get_nodes(G):
     return list(G.nodes(data=True))
+
 
 def get_edges(G):
     edges = list()
@@ -41,12 +44,13 @@ def get_edges(G):
                 sum = 0
                 for speed in edge[2]["maxspeed"]:
                     sum += int(speed)
-                maxspeed = sum//len(edge[2]["maxspeed"])
+                maxspeed = sum // len(edge[2]["maxspeed"])
             else:
                 maxspeed = int(edge[2]["maxspeed"])
         length = edge[2]['length']
-        edges.append((edge[0], edge[1], length/maxspeed))
+        edges.append((edge[0], edge[1], length / maxspeed))
     return edges
+
 
 def get_path(lp, vertices):
     path = [i for i in map(round, lp.x)]
@@ -55,6 +59,7 @@ def get_path(lp, vertices):
         if path[j] == 1:
             chemin.append(vertices[j])
     return chemin
+
 
 def sort_path(path, source, destination):
     res = []

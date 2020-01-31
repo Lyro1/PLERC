@@ -12,5 +12,4 @@ def get_shortest_path(graph, origin, destination):
     res = build_constraints(origin_node, destination_node, len(nodes))
     a = linprog(c=w, A_eq=M, b_eq=res)
     chemin = get_path(a, vertices)
-    chemin = sort_path(chemin, nodes[origin_node][0], nodes[destination_node][0])
-    return chemin
+    return sort_path(chemin, nodes[origin_node][0], nodes[destination_node][0])
