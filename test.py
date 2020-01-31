@@ -26,9 +26,13 @@ G2 = ox.graph_from_place(
         retain_all=True,
         network_type='drive',
     )
-
-origin = gps.gps_from_address(origin_name)
-destination = gps.gps_from_address(destination_name)
+while True:
+    try:
+        origin = gps.gps_from_address(origin_name)
+        destination = gps.gps_from_address(destination_name)
+        break
+    except geopy.exc.GeocoderUnavailable:
+        continue
 print(test.compare_shortest_paths(G2,origin,destination))
 fig, ax = ox.plot_graph_route(G2, lp.get_shortest_path(G2, origin, destination), fig_height=20, fig_width=20)
 
