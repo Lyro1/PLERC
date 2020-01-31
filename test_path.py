@@ -8,11 +8,11 @@ import pytest
 ox.config(use_cache=True, log_console=True)
 ox.__version__
 
-city_name = 'Biars-Sur-Cere'
+city_name = 'versailles'
 
-origin_name = "27 allee pierre loti biars-sur-cere"
+origin_name = "8 Rue des Missionnaires versailles"
 
-destination_name = "2 rue du stade biars-sur-cere"
+destination_name = "66 boulevard du roi versailles"
 
 G2 = ox.graph_from_place(
         city_name,

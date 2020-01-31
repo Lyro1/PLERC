@@ -8,6 +8,13 @@ import pytest
 ox.config(use_cache=True, log_console=True)
 ox.__version__
 
+city_name = 'versailles'
+
+origin_name = "8 Rue des Missionnaires versailles"
+
+destination_name = "66 boulevard du roi versailles"
+
+"""
 city_name = input("Quelle ville ?")
 if city_name == "" or city_name is None:
     city_name = 'Biars-Sur-Cere'
@@ -21,7 +28,7 @@ if origin_name == "" or origin_name is None:
 destination_name = input("Adresse d'arrivée :")
 if destination_name == "" or destination_name is None:
     destination_name = "2 rue du stade biars-sur-cere"
-
+"""
 G2 = ox.graph_from_place(
         city_name,
         simplify=False,
@@ -35,10 +42,10 @@ while True:
         break
     except geopy.exc.GeocoderUnavailable:
         continue
-
+"""
 def test_one():
     assert test.compare_shortest_paths(G2,origin,destination)
-
+"""
 
 
 fig, ax = ox.plot_graph_route(G2, lp.get_shortest_path(G2, origin, destination), fig_height=20, fig_width=20)
