@@ -31,6 +31,14 @@ def build_constraints(i, j, N):
     return res
 
 
+def _represents_int(s):
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
+
+
 def get_nodes(G):
     return list(G.nodes(data=True))
 
@@ -43,7 +51,8 @@ def get_edges(G):
             if type(edge[2]["maxspeed"]) == type(list()):
                 sum = 0
                 for speed in edge[2]["maxspeed"]:
-                    sum += int(speed)
+                    if _represents_int(speed):
+                        sum += int(speed)
                 maxspeed = sum // len(edge[2]["maxspeed"])
             else:
                 maxspeed = int(edge[2]["maxspeed"])

@@ -26,6 +26,7 @@ def _row_count(A):
 
     """
     tol = 1e-13
+    print(type(A))
     return np.array((abs(A) > tol).sum(axis=1)).flatten()
 
 

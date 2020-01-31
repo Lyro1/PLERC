@@ -6,10 +6,10 @@ import geopy
 ox.config(use_cache=True, log_console=True)
 ox.__version__
 
-# Program variables (TODO: get those variables through arguments)
-city_name = 'Versailles france'
-origin_name = "8 Rue des Missionnaires"
-destination_name = "66 Avenue de Paris"
+# Program variables /// TODO: get those variables through arguments)
+city_name = 'Versailles'
+origin_name = "6 Rue des Missionnaires"
+destination_name = "32 Avenue de Paris"
 
 # Search origin and destination only in the city we are focusing on
 origin_name, destination_name = origin_name + " " + city_name, destination_name + " " + city_name
