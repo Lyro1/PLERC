@@ -1,7 +1,7 @@
 from scipy.optimize import linprog
 from .matrix import *
-from ._remove_redundancy import _remove_redundancy
 import osmnx as ox
+
 
 def get_shortest_path(graph, origin, destination):
     nodes = get_nodes(graph)
