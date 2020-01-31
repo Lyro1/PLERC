@@ -8,7 +8,7 @@ import pytest
 ox.config(use_cache=True, log_console=True)
 ox.__version__
 
-city_name = 'versailles'
+city_name = 'versailles france'
 
 origin_name = "8 Rue des Missionnaires versailles"
 
@@ -37,6 +37,8 @@ G2 = ox.graph_from_place(
         retain_all=True,
         network_type='drive',
     )
+
+G2 = ox.simplify_graph(G2)
 
 print("Got graph.")
 while True:
