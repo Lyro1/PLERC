@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
-from linear_program_module import matrix
+import linear_program_module.linear_program as lp
 import osmnx as ox
 import gps_module.address as gps
 
@@ -24,8 +24,19 @@ def location(request, ville, adresse):
     loc = ox.get_nearest_node(graph, dep, method='euclidean')
     return HttpResponse(loc)
 
+def local_gps(ville, address):
+    return gps.gps_from_address(address + " " + ville)
+
+
 def path(request, ville, source, destination):
-    raise Http404
+    if (city != ville):
+        load_graph(ville)
+    path  = lp.get_shortest_path(graph, local_gps(ville , source), local_gps(ville, destination))
+    fig, ax = ox.plot_graph_route(graph, path, fig_height=20, fig_width=20)
+    response = HttpResponse(content_type="image/png")
+    fig.savefig(HttpResponse, format = "png")
+    return response
+
 
 def path_data(request, ville, source, destination):
     raise Http404
