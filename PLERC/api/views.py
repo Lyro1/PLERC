@@ -8,5 +8,5 @@ def location(request, ville, adresse):
 def path(request, ville, source, destination):
     raise Http404
 
-def path_data(request, ville, destination):
+def path_data(request, ville, source, destination):
     raise Http404
