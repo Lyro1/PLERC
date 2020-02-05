@@ -70,6 +70,20 @@ def get_path(lp, vertices):
     return chemin
 
 
+def get_detailled_path(path, edges):
+    detailled_path = []
+    source = None
+    for node in path:
+        if source is None:
+            source = node
+        else:
+            for edge in edges:
+                if edge[0] == source and edge[1] == node:
+                    detailled_path.append(edge)
+            source = node
+    return detailled_path
+
+
 def sort_path(path, source, destination):
     res = []
     for i in range(len(path)):
