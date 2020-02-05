@@ -8,4 +8,7 @@ import { Component } from '@angular/core';
 
 export class AppComponent {
   title = 'PLERC-Website';
+
+  public foundPath = false;
+  public searching = false;
 }

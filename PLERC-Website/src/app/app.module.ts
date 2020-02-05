@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { TopbarComponent } from './topbar/topbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { MapComponent } from './map/map.component';
+import {NotifierModule} from 'angular-notifier';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,10 @@ import { MapComponent } from './map/map.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NotifierModule.withConfig({
+
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
