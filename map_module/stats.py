@@ -1,3 +1,5 @@
+import linear_program_module.matrix as matrix
+
 
 def length_way(list_of_edges):
     length_total = 0
