@@ -3,7 +3,9 @@ import gps_module.address as gps
 import linear_program_module.linear_program as lp
 import geopy
 from map_module.color import *
-import utils.test as test
+from map_module.stats import *
+from map_module.save import *
+import geopandas
 
 ox.config(use_cache=True, log_console=True)
 ox.__version__
@@ -39,11 +41,20 @@ while True:
 path = lp.get_shortest_path(G2, origin, destination)
 path = lp.get_detailled_path(path, G2.edges(data=True))
 
-print(path)
 
-print("Lenght: " + str(length_way(path)))
-print("Speed: " + str(speed_way(path)))
-print("Time: " + str(time_way(path)))
+print(get_path_stats(path))
+
+#save_path_to_png(G2, lp.get_shortest_path(G2, origin, destination), "image")
+
+folium_map = ox.plot.plot_route_folium(G2, lp.get_shortest_path(G2, origin, destination))
+
+print(folium_map.get_root().render())
 
 # Search and display the shortest path between origin and destination
 #fig, ax = ox.plot_graph_route(G2, lp.get_shortest_path(G2, origin, destination), fig_height=20, fig_width=20)
+
+#print(ax)
+#geo_df_t.plot(ax=ax, markersize = 20, color="red" , alpha=1, zorder=7)
+#geo_df_line.plot(ax=ax, color = "black", alpha=1, zorder=8)
+#geo_df_r.plot(ax=ax, markersize = 20, color="green", alpha=1, zorder=9)
+#plt.show()
