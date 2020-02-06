@@ -1,7 +1,59 @@
-<app-topbar></app-topbar>
+<div class="topbar">
+  <div class="content">
+    <h2>On va où ?</h2>
+    <div class="form">
+      <div class="field">
+        <p>Je pars de là :</p>
+        <input type="text"/>
+      </div>
+      <div class="field">
+        <p>Je veux aller là :</p>
+        <input type="text"/>
+      </div>
+    </div>
+  </div>
 
-<app-sidebar></app-sidebar>
+  <div id="btn-search">
+    <i class="material-icons" (click)="search()">search</i>
+  </div>
+</div>
 
-<app-map></app-map>
+<div class="sidebar" [ngClass]="{'sidebar-open': foundPath}" >
+
+  <div class="content">
+
+    <h2 class="message-wait" *ngIf="!foundPath && !searching">Lancez votre recherche !</h2>
+
+    <h2 class="duration" *ngIf="foundPath"><span id="duration-value">{{pathData.time}}</span> <span id="duration-unit">min</span></h2>
+
+    <div class="right-mobile">
+      <p class="hours" *ngIf="foundPath"><span id="start-hour">14h22</span> - <span id="end-hour">14h36</span></p>
+      <p class="average-speed" *ngIf="foundPath">Vitesse moyenne : <span id="average-speed-value">{{pathData.getRoundedSpeed()}} km/h</span></p>
+      <p class="distance" *ngIf="foundPath">Distance : <span id="distance-value">{{pathData.getDistanceText()}}</span></p>
+    </div>
+
+    <div class="animation">
+      <img src="assets/car.gif" alt="PLERC"/>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="loading" [ngClass]="{'loading-hidden': foundPath}">
+
+  <div class="animation">
+    <img src="assets/wait.gif" alt="PLERC"/>
+  </div>
+
+  <h2 class="message-searching" *ngIf="!foundPath && searching">Patientez quelques secondes...</h2>
+
+</div>
+
+<iframe id="map" class="map" [ngClass]="{'map-active': foundPath}" [src]="cleanURL(path.html)">
+
+</iframe>
+
+<notifier-container></notifier-container>
 
 <router-outlet></router-outlet>

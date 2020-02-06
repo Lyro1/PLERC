@@ -3,22 +3,29 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TopbarComponent } from './topbar/topbar.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { MapComponent } from './map/map.component';
+import {NotifierModule} from 'angular-notifier';
+import {HttpClientModule} from '@angular/common/http';
+import {RunScriptsDirective} from './directive/run-scripts.directive';
+import {SafeHtmlPipe} from './pipes/keep-html.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TopbarComponent,
-    SidebarComponent,
-    MapComponent
+    SafeHtmlPipe,
+    RunScriptsDirective
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NotifierModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+
+export class AppModule {
+
+
+
+}
