@@ -1,4 +1,11 @@
 import { Component } from '@angular/core';
+import {PathDataModel} from './models/path-data.model';
+import {FakePlercService} from './services/fake-plerc.service';
+import {NotifierService} from 'angular-notifier';
+import {AppService} from './app.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {finalize} from 'rxjs/operators';
+import {PathModel} from './models/path.model';
 
 @Component({
   selector: 'app-root',
@@ -11,4 +18,42 @@ export class AppComponent {
 
   public foundPath = false;
   public searching = false;
+
+  private pathData: PathDataModel;
+  private path: PathModel;
+
+  constructor(private api: FakePlercService,
+              private notifier: NotifierService,
+              private appService: AppService) {
+  }
+
+  public search() {
+    this.searching = true;
+    this.getPath('Versailles', '6 Rue des Missionnaires', '66 Avenue de Paris');
+    this.getPathData('Versailles', '6 Rue des Missionnaires', '66 Avenue de Paris');
+  }
+
+  public getPath(town: string, start: string, end: string) {
+    this.api.getPath(town, start, end)
+      .pipe(finalize(() => {this.searching = false; this.foundPath = true; }))
+      .subscribe((projection: PathModel) => {
+        this.path = projection;
+
+      }, (error: HttpErrorResponse) => {
+        this.path = null;
+        this.notifier.notify('error', 'Une erreur est survenue. Réessayez plus tard.');
+      });
+  }
+
+  public getPathData(town: string, start: string, end: string) {
+    this.api.getPathData(town, start, end)
+      .pipe(finalize(() => {this.searching = false; this.foundPath = true; }))
+      .subscribe((projection: PathDataModel) => {
+        this.pathData = projection;
+      }, (error: HttpErrorResponse) => {
+        this.pathData = null;
+        this.notifier.notify('error', 'Une erreur est survenue. Réessayez plus tard.');
+      });
+  }
+
 }

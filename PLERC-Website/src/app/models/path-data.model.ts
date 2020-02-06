@@ -1,8 +1,8 @@
 
 export class PathDataModel {
-  length: number;
-  speed: number;
-  time: number;
+  public length: number;
+  public speed: number;
+  public time: number;
 
   constructor(length: number, speed: number) {
     this.length = length;

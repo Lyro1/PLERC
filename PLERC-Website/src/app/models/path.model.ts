@@ -4,6 +4,9 @@ export class PathModel {
   html: string;
 
   constructor() {
+
+    this.html = '<p>Hello World</p>';
+    /*
     this.html = '<!DOCTYPE html>\n' +
       '<head>\n' +
       '  <meta http-equiv=&#34;content-type&#34; content=&#34;text/html; charset=UTF-8&#34; />\n' +
@@ -259,5 +262,7 @@ export class PathModel {
       '  );\n' +
       '\n' +
       '</script>\n';
+
+     */
   }
 }

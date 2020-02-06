@@ -3,26 +3,27 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TopbarComponent } from './topbar/topbar.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { MapComponent } from './map/map.component';
 import {NotifierModule} from 'angular-notifier';
+import {HttpClientModule} from '@angular/common/http';
+import {EscapeHtmlPipe} from './pipes/keep-html.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TopbarComponent,
-    SidebarComponent,
-    MapComponent
+    EscapeHtmlPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NotifierModule.withConfig({
-
-    })
+    NotifierModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+
+export class AppModule {
+
+
+
+}
