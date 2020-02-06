@@ -37,10 +37,13 @@ while True:
         break
     except geopy.exc.GeocoderUnavailable:
         continue
-
+"""
 path = lp.get_shortest_path(G2, origin, destination)
-
 print(get_html_from_path(G2, path))
-
 path = lp.get_detailled_path(path, G2.edges(data=True))
+
+length = length_way(G2.edges(data=True))
+speed = speed_way(path)
+print(time_way(path, speed))
 print(get_path_stats(path))
+"""
