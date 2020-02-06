@@ -50,9 +50,9 @@
 
 </div>
 
-<div id="map" class="map" [ngClass]="{'map-active': foundPath}" [innerHTML]="path.html | safeHtml" runScripts>
+<iframe id="map" class="map" [ngClass]="{'map-active': foundPath}" [src]="cleanURL(path.html)">
 
-</div>
+</iframe>
 
 <notifier-container></notifier-container>
 

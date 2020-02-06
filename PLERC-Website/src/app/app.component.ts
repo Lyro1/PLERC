@@ -6,6 +6,8 @@ import {AppService} from './app.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {finalize} from 'rxjs/operators';
 import {PathModel} from './models/path.model';
+import {SafeResourceUrl} from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 declare var runScripts: any;
 
@@ -21,12 +23,15 @@ export class AppComponent implements AfterViewInit {
   public foundPath = false;
   public searching = false;
 
+  private sanitizer: DomSanitizer;
   private pathData: PathDataModel;
   private path: PathModel;
 
   constructor(private api: FakePlercService,
               private notifier: NotifierService,
-              private appService: AppService) {
+              private appService: AppService,
+              sanitizer: DomSanitizer) {
+    this.sanitizer = sanitizer;
   }
 
   public search() {
@@ -58,6 +63,10 @@ export class AppComponent implements AfterViewInit {
         this.pathData = null;
         this.notifier.notify('error', 'Une erreur est survenue. Réessayez plus tard.');
       });
+  }
+
+  public cleanURL(oldURL: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(oldURL);
   }
 
   ngAfterViewInit() {
