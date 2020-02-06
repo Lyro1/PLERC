@@ -2,7 +2,10 @@ import osmnx as ox
 import gps_module.address as gps
 import linear_program_module.linear_program as lp
 import geopy
-import utils.test as test
+from map_module.color import *
+from map_module.stats import *
+from map_module.save import *
+import geopandas
 
 ox.config(use_cache=True, log_console=True)
 ox.__version__
@@ -35,5 +38,9 @@ while True:
     except geopy.exc.GeocoderUnavailable:
         continue
 
-# Search and display the shortest path between origin and destination
-fig, ax = ox.plot_graph_route(G2, lp.get_shortest_path(G2, origin, destination), fig_height=20, fig_width=20)
+path = lp.get_shortest_path(G2, origin, destination)
+
+print(get_html_from_path(G2, path))
+
+path = lp.get_detailled_path(path, G2.edges(data=True))
+print(get_path_stats(path))
