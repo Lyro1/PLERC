@@ -3,6 +3,8 @@ from django.http import HttpResponse, Http404
 import linear_program_module.linear_program as lp
 import osmnx as ox
 import gps_module.address as gps
+import map_module.save as save
+import os
 
 graph = None
 city = None
@@ -32,10 +34,14 @@ def path(request, ville, source, destination):
     if (city != ville):
         load_graph(ville)
     path  = lp.get_shortest_path(graph, local_gps(ville , source), local_gps(ville, destination))
-    fig, ax = ox.plot_graph_route(graph, path, fig_height=20, fig_width=20)
-    response = HttpResponse(content_type="image/png")
-    fig.savefig(HttpResponse, format = "png")
-    return response
+    html = save.get_html_from_path(graph, path)
+    try:
+        os.remove('api/template/path.html')
+    except FileNotFoundError:
+        pass
+    f = open('api/template/path.html', 'w+')
+    f.write(html)
+    return render(request, 'path.html')
 
 
 def path_data(request, ville, source, destination):
