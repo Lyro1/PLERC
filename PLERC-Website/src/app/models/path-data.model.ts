@@ -10,6 +10,14 @@ export class PathDataModel {
     this.time = (this.length / 1000) / this.speed;
   }
 
+  public getDistanceText() {
+    if (this.length >= 1000) {
+      return ((this.length / 1000).toString() + ' km');
+    } else {
+      return (this.length.toString() + ' m');
+    }
+  }
+
   public getRoundedSpeed() {
     return (this.speed).toFixed();
   }

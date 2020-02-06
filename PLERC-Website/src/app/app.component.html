@@ -30,7 +30,7 @@
 
     <p class="average-speed" *ngIf="foundPath">Vitesse moyenne : <span id="average-speed-value">{{pathData.getRoundedSpeed()}} km/h</span></p>
 
-    <p class="distance" *ngIf="foundPath">Distance : <span id="distance-value">{{pathData.length/1000}} km</span></p>
+    <p class="distance" *ngIf="foundPath">Distance : <span id="distance-value">{{pathData.getDistanceText()}}</span></p>
 
     <div class="animation">
       <img src="assets/car.gif" alt="PLERC"/>
