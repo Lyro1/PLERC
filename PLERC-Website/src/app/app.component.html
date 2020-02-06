@@ -18,13 +18,11 @@
   </div>
 </div>
 
-<div class="sidebar">
+<div class="sidebar" [ngClass]="{'sidebar-open': foundPath}" >
 
   <div class="content">
 
     <h2 class="message-wait" *ngIf="!foundPath && !searching">Lancez votre recherche !</h2>
-
-    <h2 class="message-searching" *ngIf="!foundPath && searching">Patientez quelques secondes...</h2>
 
     <h2 class="duration" *ngIf="foundPath"><span id="duration-value">{{pathData.time}}</span> <span id="duration-unit">min</span></h2>
 
@@ -43,6 +41,12 @@
 </div>
 
 <div class="loading" [ngClass]="{'loading-hidden': foundPath}">
+
+  <div class="animation">
+    <img src="assets/wait.gif" alt="PLERC"/>
+  </div>
+
+  <h2 class="message-searching" *ngIf="!foundPath && searching">Patientez quelques secondes...</h2>
 
 </div>
 

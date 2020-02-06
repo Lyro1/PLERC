@@ -31,7 +31,7 @@ function runScripts() {
     }
     eval(myScript);
   }
-  }, 2000);
+  }, 0);
 }
 
 

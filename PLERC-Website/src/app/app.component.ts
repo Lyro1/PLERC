@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
 import {PathDataModel} from './models/path-data.model';
 import {FakePlercService} from './services/fake-plerc.service';
 import {NotifierService} from 'angular-notifier';
@@ -15,7 +15,7 @@ declare var runScripts: any;
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   title = 'PLERC-Website';
 
   public foundPath = false;
@@ -41,7 +41,7 @@ export class AppComponent {
       .subscribe((projection: PathModel) => {
         this.path = projection;
         setTimeout(() => { // wait for DOM rendering
-          runScripts();
+          // runScripts();
         });
       }, (error: HttpErrorResponse) => {
         this.path = null;
@@ -58,6 +58,11 @@ export class AppComponent {
         this.pathData = null;
         this.notifier.notify('error', 'Une erreur est survenue. Réessayez plus tard.');
       });
+  }
+
+  ngAfterViewInit() {
+    const elem = document.getElementById('map') as HTMLSelectElement;
+    elem.innerHTML = this.path.html;
   }
 
 }
