@@ -8,6 +8,7 @@ import os
 
 graph = None
 city = None
+
 def load_graph(city_name):
     global graph
     global city
@@ -42,7 +43,6 @@ def path(request, ville, source, destination):
     f = open('api/template/path.html', 'w+')
     f.write(html)
     return render(request, 'path.html')
-
 
 def path_data(request, ville, source, destination):
     raise Http404

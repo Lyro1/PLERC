@@ -1,5 +1,5 @@
 import linear_program_module.matrix as matrix
-
+import time
 
 def length_way(list_of_edges):
     length_total = 0
@@ -26,10 +26,15 @@ def speed_way(list_of_edges):
 def time_way(length, speed):
     if speed == 0:
         raise Exception('Speed can\'t be null')
-    return length/speed
+    return speed/length
 
 
 def get_path_stats(path):
     length = length_way(path)
     speed = speed_way(path)
     return length, speed, time_way(length/1000, speed)
+
+
+def will_arrive(waiting_time):
+    actual_time = time.localtime(time.time())
+    return actual_time.tm_min + waiting_time
