@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {NotifierModule} from 'angular-notifier';
 import {HttpClientModule} from '@angular/common/http';
-import {EscapeHtmlPipe} from './pipes/keep-html.pipe';
+import {RunScriptsDirective} from './directive/run-scripts.directive';
+import {SafeHtmlPipe} from './pipes/keep-html.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EscapeHtmlPipe
+    SafeHtmlPipe,
+    RunScriptsDirective
   ],
   imports: [
     BrowserModule,

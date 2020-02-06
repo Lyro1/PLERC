@@ -7,6 +7,8 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {finalize} from 'rxjs/operators';
 import {PathModel} from './models/path.model';
 
+declare var runScripts: any;
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -38,7 +40,9 @@ export class AppComponent {
       .pipe(finalize(() => {this.searching = false; this.foundPath = true; }))
       .subscribe((projection: PathModel) => {
         this.path = projection;
-
+        setTimeout(() => { // wait for DOM rendering
+          runScripts();
+        });
       }, (error: HttpErrorResponse) => {
         this.path = null;
         this.notifier.notify('error', 'Une erreur est survenue. Réessayez plus tard.');

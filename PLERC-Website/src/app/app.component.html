@@ -46,7 +46,7 @@
 
 </div>
 
-<div id="map" class="map" [ngClass]="{'map-active': foundPath}" [innerHTML]="path.html | keepHtml">
+<div id="map" class="map" [ngClass]="{'map-active': foundPath}" [innerHTML]="path.html | safeHtml" runScripts>
 
 </div>
 

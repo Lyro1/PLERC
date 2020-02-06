@@ -5,8 +5,6 @@ export class PathModel {
 
   constructor() {
 
-    this.html = '<p>Hello World</p>';
-    /*
     this.html = '<!DOCTYPE html>\n' +
       '<head>\n' +
       '  <meta http-equiv=&#34;content-type&#34; content=&#34;text/html; charset=UTF-8&#34; />\n' +
@@ -14,6 +12,7 @@ export class PathModel {
       '  <script>\n' +
       '    L_NO_TOUCH = false;\n' +
       '    L_DISABLE_3D = false;\n' +
+      '    alert("Loaded");\n' +
       '  </script>\n' +
       '\n' +
       '  <script src=&#34;https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.js&#34;></script>\n' +
@@ -263,6 +262,5 @@ export class PathModel {
       '\n' +
       '</script>\n';
 
-     */
   }
 }
