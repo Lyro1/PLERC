@@ -8,6 +8,7 @@ import {finalize} from 'rxjs/operators';
 import {PathModel} from './models/path.model';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import { DomSanitizer } from '@angular/platform-browser';
+import {PlercService} from './services/plerc.service';
 
 declare var runScripts: any;
 
@@ -20,6 +21,8 @@ declare var runScripts: any;
 export class AppComponent implements AfterViewInit {
   title = 'PLERC-Website';
 
+  public start: string;
+  public end: string;
   public foundPath = false;
   public searching = false;
 
@@ -27,7 +30,7 @@ export class AppComponent implements AfterViewInit {
   private pathData: PathDataModel;
   private path: PathModel;
 
-  constructor(private api: FakePlercService,
+  constructor(private api: PlercService,
               private notifier: NotifierService,
               private appService: AppService,
               sanitizer: DomSanitizer) {
@@ -36,8 +39,8 @@ export class AppComponent implements AfterViewInit {
 
   public search() {
     this.searching = true;
-    this.getPath('Versailles', '6 Rue des Missionnaires', '66 Avenue de Paris');
-    this.getPathData('Versailles', '6 Rue des Missionnaires', '66 Avenue de Paris');
+    this.getPath('Versailles', this.start, this.end);
+    // this.getPathData('Versailles', this.start, this.end);
   }
 
   public getPath(town: string, start: string, end: string) {
@@ -45,9 +48,6 @@ export class AppComponent implements AfterViewInit {
       .pipe(finalize(() => {this.searching = false; this.foundPath = true; }))
       .subscribe((projection: PathModel) => {
         this.path = projection;
-        setTimeout(() => { // wait for DOM rendering
-          // runScripts();
-        });
       }, (error: HttpErrorResponse) => {
         this.path = null;
         this.notifier.notify('error', 'Une erreur est survenue. Réessayez plus tard.');

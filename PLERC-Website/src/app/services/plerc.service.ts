@@ -12,15 +12,15 @@ export class PlercService {
               private http: HttpClient) {}
 
   public isPointValid(town: string, location: string) {
-    return this.http.get(`${this.appConfigService.config.api}/location/${town}/${location}`);
+    return this.http.get(` ${this.appConfigService.config.api}/location/${town}/${location}`);
   }
 
   public getPath(town: string, start: string, end: string) {
-    return this.http.get(`${this.appConfigService.config.api}/path/${town}/${start}/${end}`);
+    return this.http.get(` ${this.appConfigService.config.api}/path/${town}/${start}/${end}`);
   }
 
   public getPathData(town: string, start: string, end: string) {
-    return this.http.get(`${this.appConfigService.config.api}/path/${town}/${start}/${end}/data`);
+    return this.http.get(` ${this.appConfigService.config.api}/path/${town}/${start}/${end}/data`);
   }
 
 }
