@@ -14,6 +14,8 @@ ox.__version__
 city_name = 'Versailles'
 origin_name = "6 Rue des Missionnaires"
 destination_name = "32 Avenue de Paris"
+#destination_name = "rue rémont"
+
 
 # Search origin and destination only in the city we are focusing on
 origin_name, destination_name = origin_name + " " + city_name, destination_name + " " + city_name
@@ -37,13 +39,40 @@ while True:
         break
     except geopy.exc.GeocoderUnavailable:
         continue
-"""
-path = lp.get_shortest_path(G2, origin, destination)
-print(get_html_from_path(G2, path))
-path = lp.get_detailled_path(path, G2.edges(data=True))
 
-length = length_way(G2.edges(data=True))
-speed = speed_way(path)
-print(time_way(path, speed))
-print(get_path_stats(path))
+
+
+path = lp.get_shortest_path(G2, origin, destination)
+#chemin que l'on veut emprinter 
+print(get_html_from_path(G2, path))
+
+path_details = lp.get_detailled_path(path, G2.edges(data=True))
+#le plus court chemin avec les details de cotes
+
+length = length_way(path_details)
+print("distance en m")
+print(length) #3690m
+speed = speed_way(path_details)
+print("vitesse moyenne sur le trajet en km/h")
+print(speed) #48 km/h
 """
+speed = speed/3.6 #speed en m/s
+print("speed en m/s")
+print(speed)
+"""
+
+
+print("temps en s")
+time = time_way(length, speed)
+print(time)
+print("temps en m")
+print(time/60)
+print("temp fin")
+
+
+
+#print("arrive at :")
+#will_arrive(time)
+
+#print(affiche_time(time))
+#print(get_path_stats(path))
