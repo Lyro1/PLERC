@@ -1,5 +1,8 @@
 import linear_program_module.matrix as matrix
 import time
+from time import strftime
+from datetime import datetime
+
 
 def length_way(list_of_edges):
     length_total = 0
@@ -33,6 +36,7 @@ def time_way(length, speed):
 
 def affiche_time(time):
     tab =[]
+    datetime.now()
     tab.append(time/360)
     print(int(time/360))
     tab.append(time/60)
@@ -41,9 +45,16 @@ def affiche_time(time):
 
 
 def will_arrive(waiting_time):
-    t = time.localtime()
-    #print(t)
-   # print(time.asctime(t))
+    now = datetime.now()
+    year = now.strftime("%Y")
+    month = now.strftime("%m")
+    day = now.strftime("%d")
+    hour = now.strftime("%H")
+    min = now.strftime("%M")
+    min = float(min)
+    min += waiting_time
+    min = str(min)
+    print(day + "-" + month + "-" + year + " " + hour +":" + min)
     return
 
 def get_path_stats(path):

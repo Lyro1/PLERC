@@ -55,24 +55,23 @@ print(length) #3690m
 speed = speed_way(path_details)
 print("vitesse moyenne sur le trajet en km/h")
 print(speed) #48 km/h
+
 """
 speed = speed/3.6 #speed en m/s
 print("speed en m/s")
 print(speed)
 """
 
-
 print("temps en s")
 time = time_way(length, speed)
 print(time)
-print("temps en m")
-print(time/60)
+print("temps en min")
+print(int(time/60))
 print("temp fin")
 
 
-
-#print("arrive at :")
-#will_arrive(time)
+print("\n")
+print("arrive at :")
+will_arrive(time/60)
 
 #print(affiche_time(time))
-#print(get_path_stats(path))
