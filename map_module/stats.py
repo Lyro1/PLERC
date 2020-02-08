@@ -34,6 +34,7 @@ def time_way(length, speed):
     print(speed)
     return length/(speed) #return des secondes
 
+
 def affiche_time(time):
     tab =[]
     datetime.now()
@@ -46,16 +47,18 @@ def affiche_time(time):
 
 def will_arrive(waiting_time):
     now = datetime.now()
-    year = now.strftime("%Y")
-    month = now.strftime("%m")
-    day = now.strftime("%d")
     hour = now.strftime("%H")
     min = now.strftime("%M")
     min = float(min)
+    hour = int(hour)
     min += waiting_time
-    min = str(min)
-    print(day + "-" + month + "-" + year + " " + hour +":" + min)
-    return
+    if min > 60:
+        hour += 1
+        min -= 60
+    if hour > 24:
+        hour += hour - 24
+    return hour, min
+
 
 def get_path_stats(path):
     length = length_way(path)
