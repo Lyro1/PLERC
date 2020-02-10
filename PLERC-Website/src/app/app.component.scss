@@ -99,16 +99,8 @@
     .duration {
       text-align: center;
       margin-top: 25px;
-
-      #duration-value {
-        font-size: 48px;
-      }
-
-      #duration-unit {
-        padding-left: 6px;
-        font-size: 16px;
-        color: #999;
-      }
+      font-size: 48px;
+      color: #999;
     }
 
     .hours {
@@ -158,6 +150,7 @@
   height: calc(100vh - 200px);
   margin-top: 200px;
   border: none;
+  z-index: 6;
 }
 
 .map {
@@ -178,11 +171,21 @@
   height: calc(100vh - 200px);
   background-color: white;
   transition: 0.5s;
+  z-index: 7;
 
   .animation {
-    width: 300px;
-    height: 300px;
+    width: 240px;
     margin: calc(50vh - 250px) auto;
+
+    img {
+      width: 100%;
+    }
+  }
+
+
+  .loading-gif {
+    width: 200px;
+    margin: 0 auto;
 
     img {
       width: 100%;
@@ -193,6 +196,25 @@
 .loading-hidden {
   left: calc(100% - 350px);
   transition: 0.5s;
+}
+
+
+.loading-behind-map {
+  position: absolute;
+  top: 200px;
+  left: 0;
+  width: calc(100% - 350px);
+  height: calc(100vh - 200px);
+  z-index: 5;
+
+  .loading-gif {
+    width: 300px;
+    margin: 0 auto;
+
+    img {
+      width: 100%;
+    }
+  }
 }
 
 @media only screen and (max-width: 910px) {

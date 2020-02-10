@@ -22,6 +22,6 @@ export class FakePlercService {
   }
 
   public getPathData(town: string, start: string, end: string): Observable<PathDataModel> {
-    return of(new PathDataModel(2360, 48.83728));
+    return of(new PathDataModel(0.04827424, 2360, 48.83728, '14h23', '14h35'));
   }
 }
