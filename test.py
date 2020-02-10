@@ -6,14 +6,16 @@ from map_module.color import *
 from map_module.stats import *
 from map_module.save import *
 import geopandas
+from map_module.trafic import *
 
 ox.config(use_cache=True, log_console=True)
 ox.__version__
 
-# Program variables /// TODO: get those variables through arguments)
-city_name = 'Versailles'
-origin_name = "6 Rue des Missionnaires"
-destination_name = "32 Avenue de Paris"
+# Program variables
+city_name = 'Biars-sur-Cere'
+origin_name = "2 rue du stade"
+destination_name = "24 allee pierre loti"
+
 
 # Search origin and destination only in the city we are focusing on
 origin_name, destination_name = origin_name + " " + city_name, destination_name + " " + city_name
@@ -37,13 +39,14 @@ while True:
         break
     except geopy.exc.GeocoderUnavailable:
         continue
-"""
-path = lp.get_shortest_path(G2, origin, destination)
-print(get_html_from_path(G2, path))
-path = lp.get_detailled_path(path, G2.edges(data=True))
 
-length = length_way(G2.edges(data=True))
-speed = speed_way(path)
-print(time_way(path, speed))
-print(get_path_stats(path))
-"""
+
+path, weight, weight_realtime = lp.get_shortest_path_realtime(G2, origin, destination)
+print(get_html_from_path(G2, path))
+#chemin que l'on veut emprinter 
+# print(get_html_from_path(G2, path))
+
+# path_details = lp.get_detailled_path(path, G2.edges(data=True))
+#le plus court chemin avec les details de cotes
+
+#print(affiche_time(time))

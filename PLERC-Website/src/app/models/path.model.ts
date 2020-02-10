@@ -1,9 +1,8 @@
-import {HttpClient} from '@angular/common/http';
 
 export class PathModel {
-  html: string;
+  url: string;
 
-  constructor() {
-    this.html = 'http://localhost:4200/assets/map-test.html';
+  constructor(url: string) {
+    this.url = url;
   }
 }

@@ -1,15 +1,16 @@
-import {AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {PathDataModel} from './models/path-data.model';
 import {FakePlercService} from './services/fake-plerc.service';
 import {NotifierService} from 'angular-notifier';
 import {AppService} from './app.service';
-import {HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {finalize} from 'rxjs/operators';
 import {PathModel} from './models/path.model';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import { DomSanitizer } from '@angular/platform-browser';
+import {PlercService} from './services/plerc.service';
 
-declare var runScripts: any;
+declare var changeIframeSrc: any;
 
 @Component({
   selector: 'app-root',
@@ -17,37 +18,51 @@ declare var runScripts: any;
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent implements AfterViewInit {
+export class AppComponent {
   title = 'PLERC-Website';
 
+  public start: string;
+  public end: string;
+  public wrongStart = false;
+  public wrongEnd = false;
   public foundPath = false;
   public searching = false;
 
-  private sanitizer: DomSanitizer;
-  private pathData: PathDataModel;
   private path: PathModel;
+  private pathData: PathDataModel;
+  private url = 'about:blank';
 
-  constructor(private api: FakePlercService,
+  constructor(private api: PlercService,
               private notifier: NotifierService,
               private appService: AppService,
-              sanitizer: DomSanitizer) {
-    this.sanitizer = sanitizer;
-  }
+              private sanitizer: DomSanitizer,
+              private http: HttpClient) {}
 
   public search() {
-    this.searching = true;
-    this.getPath('Versailles', '6 Rue des Missionnaires', '66 Avenue de Paris');
-    this.getPathData('Versailles', '6 Rue des Missionnaires', '66 Avenue de Paris');
+    if (this.start == null || this.start === '') {
+      this.notifier.notify('error', 'Vous devez spécifier une adresse de départ');
+      this.wrongStart = true;
+    }
+    if (this.end == null || this.end === '') {
+      this.notifier.notify('error', 'Vous devez spécifier une adresse d\'arrivée');
+      this.wrongEnd = true;
+    } else {
+      this.wrongStart = false;
+      this.wrongEnd = false;
+      this.searching = true;
+      this.getPath('Biars sur Cere', this.start, this.end);
+    }
   }
 
   public getPath(town: string, start: string, end: string) {
     this.api.getPath(town, start, end)
-      .pipe(finalize(() => {this.searching = false; this.foundPath = true; }))
+      .pipe()
       .subscribe((projection: PathModel) => {
         this.path = projection;
-        setTimeout(() => { // wait for DOM rendering
-          // runScripts();
-        });
+        this.url = this.path.url;
+        this.searching = false;
+        this.foundPath = true;
+        changeIframeSrc(this.url);
       }, (error: HttpErrorResponse) => {
         this.path = null;
         this.notifier.notify('error', 'Une erreur est survenue. Réessayez plus tard.');
@@ -64,14 +79,4 @@ export class AppComponent implements AfterViewInit {
         this.notifier.notify('error', 'Une erreur est survenue. Réessayez plus tard.');
       });
   }
-
-  public cleanURL(oldURL: string): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(oldURL);
-  }
-
-  ngAfterViewInit() {
-    const elem = document.getElementById('map') as HTMLSelectElement;
-    elem.innerHTML = this.path.html;
-  }
-
 }

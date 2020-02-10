@@ -57,7 +57,37 @@ def get_edges(G):
             else:
                 maxspeed = int(edge[2]["maxspeed"])
         length = edge[2]['length']
-        edges.append((edge[0], edge[1], length / maxspeed))
+        edges.append((edge[0], edge[1], (length / maxspeed) * 0.6))
+    return edges
+
+
+def get_edges_realtime(G, drivers, paths):
+    edges = get_edges(G)
+    h = 0
+    g_edges = G.edges(data=True)
+    for edge in list(g_edges):
+        i = 0
+        print("Doing edge " + str(h) + "/" + str(len(G.edges())))
+        for path in paths:
+            path_drivers = drivers[i]
+            path = get_detailled_path(path, g_edges)
+            for path_edge in path:
+                if path_edge[0] == edge[0] and path_edge[1] == edge[1]:
+                    maxspeed = 50
+                    if "maxspeed" in path_edge[2]:
+                        if type(path_edge[2]["maxspeed"]) == type(list()):
+                            sum = 0
+                            for speed in path_edge[2]["maxspeed"]:
+                                if _represents_int(speed):
+                                    sum += int(speed)
+                            maxspeed = sum // len(path_edge[2]["maxspeed"])
+                        else:
+                            maxspeed = int(path_edge[2]["maxspeed"])
+                    length = path_edge[2]['length']
+                    time = (length / maxspeed) * 0.6
+                    edges[h] = (path_edge[0], path_edge[1], time * (1 + path_drivers * 0.05))
+        i += 1
+        h += 1
     return edges
 
 
