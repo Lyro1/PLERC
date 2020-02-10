@@ -2,10 +2,7 @@ import osmnx as ox
 import gps_module.address as gps
 import linear_program_module.linear_program as lp
 import geopy
-from map_module.color import *
-from map_module.stats import *
 from map_module.save import *
-import geopandas
 from map_module.trafic import *
 
 ox.config(use_cache=True, log_console=True)
@@ -41,8 +38,10 @@ while True:
         continue
 
 
+
 path, weight, weight_realtime = lp.get_shortest_path_realtime(G2, origin, destination)
 print(get_html_from_path(G2, path))
+
 #chemin que l'on veut emprinter 
 # print(get_html_from_path(G2, path))
 
