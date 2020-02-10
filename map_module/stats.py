@@ -45,19 +45,11 @@ def affiche_time(time):
     return tab
 
 
-def will_arrive(waiting_time):
+def will_arrive(time):
     now = datetime.now()
-    hour = now.strftime("%H")
-    min = now.strftime("%M")
-    min = float(min)
-    hour = int(hour)
-    min += waiting_time
-    if min > 60:
-        hour += 1
-        min -= 60
-    if hour > 24:
-        hour += hour - 24
-    return hour, min
+    hour = int(now.strftime("%H")) + int(time)
+    minutes = int(now.strftime("%M")) + int((time % 1) * 100)
+    return str(hour) + "h" + str(minutes)
 
 
 def get_path_stats(path):
