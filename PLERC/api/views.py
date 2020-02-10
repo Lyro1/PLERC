@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 import linear_program_module.linear_program as lp
 import osmnx as ox
 import gps_module.address as gps
 import map_module.save as save
+import map_module.stats as stats
+import time
 import os
 
 graph = None
@@ -34,7 +36,7 @@ def local_gps(ville, address):
 def path(request, ville, source, destination):
     if (city != ville):
         load_graph(ville)
-    path  = lp.get_shortest_path(graph, local_gps(ville , source), local_gps(ville, destination))
+    path = lp.get_shortest_path(graph, local_gps(ville , source), local_gps(ville, destination))
     html = save.get_html_from_path(graph, path)
     try:
         os.remove('api/template/path.html')
@@ -45,4 +47,17 @@ def path(request, ville, source, destination):
     return render(request, 'path.html')
 
 def path_data(request, ville, source, destination):
-    raise Http404
+    res = {}
+    if (city != ville):
+        load_graph(ville)
+    path = lp.get_shortest_path(graph, local_gps(ville , source), local_gps(ville, destination))
+    detailed_path = lp.get_detailled_path(path, graph.edges(data=True))
+    length, speed, path_time = stats.get_path_stats(detailed_path)
+    res["length"] = length
+    res["speed"] = speed
+    res["time"] = path_time
+    actual_time = time.localtime(time.time())
+    res["departure"] = str(actual_time[3]) + "h" + str(actual_time[4])
+    arrival_time = stats.will_arrive(path_time)
+    res["arrival"] = arrival_time
+    return JsonResponse(res)
