@@ -1,5 +1,6 @@
 import osmnx as ox
 import folium
+import map_module.trafic as trafic
 
 
 def save_path_to_png(graph, path, filename, width=20, height=20):
@@ -8,6 +9,8 @@ def save_path_to_png(graph, path, filename, width=20, height=20):
 
 def get_html_from_path(graph, path):
     folium_map = ox.plot.plot_route_folium(graph, path)
-    folium.PolyLine()
+    lines = trafic.getColoredLines(graph, 20, 100)
+    for line in lines:
+        folium_map.add_children(line)
     return folium_map.get_root().render()
 

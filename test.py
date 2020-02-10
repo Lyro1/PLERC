@@ -40,9 +40,9 @@ while True:
     except geopy.exc.GeocoderUnavailable:
         continue
 
-print(getColoredLines(G2, 20, 100))
 
-# path = lp.get_shortest_path(G2, origin, destination)
+path = lp.get_shortest_path(G2, origin, destination)
+print(get_html_from_path(G2, path))
 #chemin que l'on veut emprinter 
 # print(get_html_from_path(G2, path))
 
