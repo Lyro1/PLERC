@@ -41,7 +41,7 @@ while True:
         continue
 
 
-path = lp.get_shortest_path(G2, origin, destination)
+path, weight, weight_realtime = lp.get_shortest_path_realtime(G2, origin, destination)
 print(get_html_from_path(G2, path))
 #chemin que l'on veut emprinter 
 # print(get_html_from_path(G2, path))
