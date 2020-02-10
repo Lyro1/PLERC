@@ -14,12 +14,12 @@ city = None
 def load_graph(city_name):
     global graph
     global city
-    graph = ox.graph_from_place(
+    graph = ox.simplify_graph(ox.graph_from_place(
         city_name,
         simplify=False,
         retain_all=True,
         network_type='drive',
-    )
+    ))
     city = city_name
 
 def location(request, ville, adresse):
