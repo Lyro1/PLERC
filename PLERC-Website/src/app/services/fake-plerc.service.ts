@@ -18,7 +18,7 @@ export class FakePlercService {
   }
 
   public getPath(town: string, start: string, end: string): Observable<PathModel> {
-    return of(new PathModel());
+    return of(new PathModel('http://localhost:4200/assets/map-test.html'));
   }
 
   public getPathData(town: string, start: string, end: string): Observable<PathDataModel> {
