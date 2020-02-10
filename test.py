@@ -6,15 +6,15 @@ from map_module.color import *
 from map_module.stats import *
 from map_module.save import *
 import geopandas
+from map_module.trafic import *
 
 ox.config(use_cache=True, log_console=True)
 ox.__version__
 
-# Program variables /// TODO: get those variables through arguments)
-city_name = 'Versailles'
-origin_name = "6 Rue des Missionnaires"
-destination_name = "32 Avenue de Paris"
-#destination_name = "rue rémont"
+# Program variables
+city_name = 'Biars-sur-Cere'
+origin_name = "2 rue du stade"
+destination_name = "24 allee pierre loti"
 
 
 # Search origin and destination only in the city we are focusing on
@@ -40,38 +40,13 @@ while True:
     except geopy.exc.GeocoderUnavailable:
         continue
 
+print(getColoredLines(G2, 20, 100))
 
-
-path = lp.get_shortest_path(G2, origin, destination)
+# path = lp.get_shortest_path(G2, origin, destination)
 #chemin que l'on veut emprinter 
-print(get_html_from_path(G2, path))
+# print(get_html_from_path(G2, path))
 
-path_details = lp.get_detailled_path(path, G2.edges(data=True))
+# path_details = lp.get_detailled_path(path, G2.edges(data=True))
 #le plus court chemin avec les details de cotes
-
-length = length_way(path_details)
-print("distance en m")
-print(length) #3690m
-speed = speed_way(path_details)
-print("vitesse moyenne sur le trajet en km/h")
-print(speed) #48 km/h
-
-"""
-speed = speed/3.6 #speed en m/s
-print("speed en m/s")
-print(speed)
-"""
-
-print("temps en s")
-time = time_way(length, speed)
-print(time)
-print("temps en min")
-print(int(time/60))
-print("temp fin")
-
-
-print("\n")
-print("arrive at :")
-will_arrive(time/60)
 
 #print(affiche_time(time))

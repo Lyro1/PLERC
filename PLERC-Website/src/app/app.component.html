@@ -4,11 +4,11 @@
     <div class="form">
       <div class="field">
         <p>Je pars de là :</p>
-        <input type="text" [(ngModel)]="start"/>
+        <input type="text" [(ngModel)]="start" (change)="wrongStart = false;" [ngClass]="{'wrong-input': wrongStart}"/>
       </div>
       <div class="field">
         <p>Je veux aller là :</p>
-        <input type="text" [(ngModel)]="end"/>
+        <input type="text" [(ngModel)]="end" (change)="wrongEnd = false;" [ngClass]="{'wrong-input': wrongEnd}"/>
       </div>
     </div>
   </div>
@@ -53,7 +53,6 @@
 <iframe id="map" class="map"
         [ngClass]="{'map-active': foundPath}"
         [src]="url|safe: 'resourceUrl'">
-
 </iframe>
 
 <notifier-container></notifier-container>

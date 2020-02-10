@@ -23,8 +23,8 @@ export class AppComponent {
 
   public start: string;
   public end: string;
-  public wrong_start = false;
-  public wrong_end = false;
+  public wrongStart = false;
+  public wrongEnd = false;
   public foundPath = false;
   public searching = false;
 
@@ -41,9 +41,14 @@ export class AppComponent {
   public search() {
     if (this.start == null || this.start === '') {
       this.notifier.notify('error', 'Vous devez spécifier une adresse de départ');
-    } else if (this.end == null || this.end === '') {
+      this.wrongStart = true;
+    }
+    if (this.end == null || this.end === '') {
       this.notifier.notify('error', 'Vous devez spécifier une adresse d\'arrivée');
+      this.wrongEnd = true;
     } else {
+      this.wrongStart = false;
+      this.wrongEnd = false;
       this.searching = true;
       this.getPath('Biars sur Cere', this.start, this.end);
     }

@@ -1,4 +1,5 @@
 import osmnx as ox
+import folium
 
 
 def save_path_to_png(graph, path, filename, width=20, height=20):
@@ -7,5 +8,6 @@ def save_path_to_png(graph, path, filename, width=20, height=20):
 
 def get_html_from_path(graph, path):
     folium_map = ox.plot.plot_route_folium(graph, path)
+    folium.PolyLine()
     return folium_map.get_root().render()
 
