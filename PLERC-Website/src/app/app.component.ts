@@ -30,6 +30,9 @@ export class AppComponent {
   public searching = false;
   public optionsOpen = false;
 
+  public trafic = false;
+  public algorithm = 's1';
+
   private pathData: PathDataModel;
   private url = 'about:blank';
 
@@ -73,6 +76,32 @@ export class AppComponent {
   }
 
   public getPathData(town: string, start: string, end: string) {
+    this.api.getPathData(town, start, end)
+      .pipe()
+      .subscribe((projection: PathDataModel) => {
+        this.pathData = projection;
+      }, (error: HttpErrorResponse) => {
+        this.pathData = null;
+        this.notifier.notify('error', 'Une erreur est survenue. Réessayez plus tard.');
+      });
+  }
+
+  public getPathTrafic(town: string, start: string, end: string) {
+    this.api.getPath(town, start, end)
+      .pipe(finalize(() => {this.searching = false; this.foundPath = true; }))
+      .subscribe(() => {
+      }, (error: HttpErrorResponse) => {
+        if (error.status === 200) {
+          this.url = this.appConfigService.config.api + '/path/' + town + '/' + start + '/' + end;
+          changeIframeSrc(this.url);
+        } else {
+          this.url = 'about:blank';
+          this.notifier.notify('error', 'Une erreur est survenue. Réessayez plus tard.');
+        }
+      });
+  }
+
+  public getPathDataTrafic(town: string, start: string, end: string) {
     this.api.getPathData(town, start, end)
       .pipe()
       .subscribe((projection: PathDataModel) => {

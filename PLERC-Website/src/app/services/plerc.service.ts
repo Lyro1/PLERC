@@ -12,7 +12,7 @@ import {PathDataModel} from '../models/path-data.model';
 export class PlercService {
 
   constructor(private appConfigService: AppConfigService,
-              private http: HttpClient) {}
+              private http: HttpClient) {
 
   public getPath(town: string, start: string, end: string) {
     return this.http.get(
