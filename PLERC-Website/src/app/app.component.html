@@ -11,6 +11,34 @@
         <input type="text" [(ngModel)]="end" (change)="wrongEnd = false;" [ngClass]="{'wrong-input': wrongEnd}"/>
       </div>
     </div>
+
+    <div class="options">
+
+      <div class="change-options-btn" (click)="switchOptionsDiv()">
+        <i class="material-icons" [ngClass]="{'rotate': optionsOpen}">keyboard_arrow_down</i>
+        <p>Options de recherche</p>
+      </div>
+
+      <div class="options-div" [ngClass]="{'options-open': optionsOpen}">
+
+        <div class="options-form">
+          <div class="options-form-div">
+            <input type="checkbox" id="trafic"/>
+            <p>Trafic</p>
+          </div>
+          <div class="options-form-div">
+            <p>Algorithme :</p>
+            <select name="algorithm" id="algorithm">
+              <option value="">Simplexe 1</option>
+              <option value="dog">Simplexe 2</option>
+              <option value="cat">Djikstra OSMNX</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
   </div>
 
   <div id="btn-search">

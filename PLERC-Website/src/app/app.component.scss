@@ -3,7 +3,6 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 200px;
   margin-top: -1px;
   padding-top: 1px;
   background-color: #42a5f5;
@@ -13,7 +12,6 @@
 
   .content {
     width: 800px;
-    height: 150px;
     margin: 25px auto;
 
     .form {
@@ -41,6 +39,69 @@
 
         .wrong-input {
           border: 2px solid red;
+        }
+      }
+    }
+
+    .options {
+      width: 100%;
+      transition: 0.5s;
+
+      .change-options-btn {
+        height: 40px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: 0.3s;
+
+        i {
+          display: block;
+          float: left;
+          line-height: 40px;
+          transition: 0.3s;
+        }
+
+        .rotate {
+          transform: rotate(180deg);
+          transition: 0.3s;
+        }
+
+        p {
+          line-height: 40px;
+          font-size: 14px;
+          padding-left: 10px;
+        }
+      }
+
+      .change-options-btn:hover {
+        color: #ddd;
+        transition: 0.3s;
+      }
+
+      .options-div {
+        height: 0;
+        overflow: hidden;
+        transition: 0.5s;
+      }
+
+      .options-open {
+        height: 50px;
+        transition: 0.5s;
+      }
+
+      .options-form {
+        width: 100%;
+        display: flex;
+        justify-content: left;
+
+        p {
+          font-size: 13px;
+          line-height: 20px;
+          padding-left: 6px;
+        }
+
+        .options-form-div {
+          margin: 10px;
+          display: flex;
         }
       }
     }

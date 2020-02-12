@@ -28,6 +28,7 @@ export class AppComponent {
   public wrongEnd = false;
   public foundPath = false;
   public searching = false;
+  public optionsOpen = false;
 
   private pathData: PathDataModel;
   private url = 'about:blank';
@@ -107,5 +108,8 @@ export class AppComponent {
     return (speed).toFixed();
   }
 
+  private switchOptionsDiv() {
+    this.optionsOpen = !this.optionsOpen;
+  }
 
 }
