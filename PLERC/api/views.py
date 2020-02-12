@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404, JsonResponse
 import linear_program_module.linear_program as lp
 import osmnx as ox
+import networkx as nx
 import gps_module.address as gps
 import map_module.save as save
 import map_module.stats as stats
@@ -10,6 +11,7 @@ import os
 
 graph = None
 city = None
+
 
 def load_graph(city_name):
     global graph
@@ -22,22 +24,30 @@ def load_graph(city_name):
     ))
     city = city_name
 
+
 def location(request, ville, adresse):
-    if (city != ville):
+    if city != ville:
         load_graph(ville)
-    dep = gps.gps_from_address(adresse +" "+ ville)
+    dep = gps.gps_from_address(adresse + " " + ville)
     loc = ox.get_nearest_node(graph, dep, method='euclidean')
     return HttpResponse(loc)
+
 
 def local_gps(ville, address):
     return gps.gps_from_address(address + " " + ville)
 
 
-def path(request, ville, source, destination):
-    if (city != ville):
+def path(request, trafic, ville, source, destination, algo):
+    if city != ville:
         load_graph(ville)
-    path = lp.get_shortest_path(graph, local_gps(ville , source), local_gps(ville, destination))
-    html = save.get_html_from_path(graph, path)
+    if algo != "djikstra":
+        if trafic == "trafic":
+            path = lp.get_shortest_path_realtime(graph, local_gps(ville, source), local_gps(ville, destination))
+        else:
+            path = lp.get_shortest_path(graph, local_gps(ville, source), local_gps(ville, destination))
+    else:
+        path = nx.shortest_path(graph, local_gps(ville, source), local_gps(ville, destination))
+    html = save.get_html_from_path(graph, path, trafic == "trafic")
     try:
         os.remove('api/template/path.html')
     except FileNotFoundError:
@@ -46,11 +56,18 @@ def path(request, ville, source, destination):
     f.write(html)
     return render(request, 'path.html')
 
-def path_data(request, ville, source, destination):
+
+def path_data(request, trafic, ville, source, destination, algo):
     res = {}
-    if (city != ville):
+    if city != ville:
         load_graph(ville)
-    path = lp.get_shortest_path(graph, local_gps(ville , source), local_gps(ville, destination))
+    if algo != "djikstra":
+        if trafic == "trafic":
+            path = lp.get_shortest_path_realtime(graph, local_gps(ville, source), local_gps(ville, destination))
+        else:
+            path = lp.get_shortest_path(graph, local_gps(ville, source), local_gps(ville, destination))
+    else:
+        path = nx.shortest_path(graph, local_gps(ville, source), local_gps(ville, destination))
     detailed_path = lp.get_detailled_path(path, graph.edges(data=True))
     length, speed, path_time = stats.get_path_stats(detailed_path)
     res["length"] = length
