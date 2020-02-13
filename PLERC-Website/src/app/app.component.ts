@@ -62,8 +62,9 @@ export class AppComponent {
   }
 
   public getPath(trafic: boolean, town: string, start: string, end: string, algo: string) {
+    console.log(trafic);
     let enableTrafic = 'trafic';
-    if (!this.trafic) {
+    if (!trafic) {
       enableTrafic = 'no-trafic';
     }
     this.api.getPath(enableTrafic, town, start, end, algo)
@@ -71,7 +72,7 @@ export class AppComponent {
       .subscribe(() => {
       }, (error: HttpErrorResponse) => {
         if (error.status === 200) {
-          this.url = this.appConfigService.config.api + '/path/' + town + '/' + start + '/' + end;
+          this.url = this.appConfigService.config.api + '/path/' + enableTrafic + '/' + town + '/' + start + '/' + end + '/' + algo;
           changeIframeSrc(this.url);
         } else {
           this.url = 'about:blank';
