@@ -39,13 +39,15 @@ while True:
 
 originPoint = ox.get_nearest_node(G2, origin)
 destinationPoint = ox.get_nearest_node(G2, destination)
+path1 = nx.shortest_path(G2, originPoint, destinationPoint)
 
-path = nx.shortest_path(G2, originPoint, destinationPoint)
-print("NetworkX Shortest Path : " + str(path))
-path = lp.get_shortest_path(G2, origin, destination)
-print("Get Shortest Path : " + str(path))
-path, weight, weight_realtime = lp.get_shortest_path_realtime(G2, origin, destination)
-print("Get Shortest Path Realtime : " + str(path))
+path2 = lp.get_shortest_path(G2, origin, destination)
+
+path3, weight, weight_realtime = lp.get_shortest_path_realtime(G2, origin, destination)
+
+print("NetworkX Shortest Path : " + str(path1))
+print("Get Shortest Path : " + str(path2))
+print("Get Shortest Path Realtime : " + str(path3))
 
 # print(get_html_from_path(G2, path))
 

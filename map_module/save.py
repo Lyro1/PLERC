@@ -15,6 +15,6 @@ def get_html_from_path(graph, path, traficEnabled=False, weight=None, weight_rea
         else:
             lines = trafic.colorEdgesInRealTime(graph, weight, weight_realtime)
         for line in lines:
-            folium_map.add_children(line)
+            folium_map.add_child(line)
     return folium_map.get_root().render()
 

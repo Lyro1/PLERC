@@ -19,20 +19,20 @@ def speed_way(list_of_edges):
     count = 0
     for edges in list_of_edges:
         if "maxspeed" in edges[2]:
-            speed_total += int(edges[2]["maxspeed"])
+            speed_total += int(edges[2]["maxspeed"]) * 0.6
         else:
             speed_total += 20
         count += 1
-    return speed_total / count #moyenne en km/h
+    return speed_total / count
 
 
-def time_way(length, speed):
+def time_way(length, speed, weights_realtime=None):
     if speed == 0:
         raise Exception('Speed can\'t be null')
-    speed = speed/3.6 #convert m/S
-    print("en m/s")
-    print(speed)
-    return length/(speed) #return des secondes
+    time = length/(speed/3.6)
+    if weights_realtime is not None:
+        time *= 1.6
+    return time
 
 
 def affiche_time(time):
@@ -52,9 +52,8 @@ def will_arrive(time):
     return str(hour) + "h" + str(minutes)
 
 
-def get_path_stats(path):
-    print("get_path_stats(" + str(path) + ")")
+def get_path_stats(path, weights_realtime=None):
     length = length_way(path)
     speed = speed_way(path)
-    return length, speed, time_way(length/1000, speed)
+    return length, speed, time_way(length/1000, speed, weights_realtime)
 
