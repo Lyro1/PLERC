@@ -29,6 +29,7 @@ export class AppComponent {
   public foundPath = false;
   public searching = false;
   public optionsOpen = false;
+  public canSimulateTrafic = true;
 
   public trafic = false;
   public algorithm = 's1';
@@ -53,6 +54,7 @@ export class AppComponent {
       this.notifier.notify('error', 'Vous devez spécifier une adresse d\'arrivée');
       this.wrongEnd = true;
     } else {
+      this.optionsOpen = false;
       this.foundPath = false;
       this.wrongStart = false;
       this.wrongEnd = false;
@@ -84,7 +86,7 @@ export class AppComponent {
 
   public getPathData(trafic: boolean, town: string, start: string, end: string, algo: string) {
     let enableTrafic = 'trafic';
-    if (!this.trafic) {
+    if (!trafic) {
       enableTrafic = 'no-trafic';
     }
     this.api.getPathData(enableTrafic, town, start, end, algo)
@@ -126,4 +128,12 @@ export class AppComponent {
     this.optionsOpen = !this.optionsOpen;
   }
 
+  onChange(value: any) {
+    console.log(value);
+    if (value === 'djikstra') {
+      this.canSimulateTrafic = false;
+    } else {
+      this.canSimulateTrafic = true;
+    }
+  }
 }

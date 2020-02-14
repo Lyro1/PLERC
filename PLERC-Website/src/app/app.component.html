@@ -23,16 +23,16 @@
 
         <div class="options-form">
           <div class="options-form-div">
-            <input type="checkbox" id="trafic" [(ngModel)]="trafic" />
-            <p>Trafic</p>
-          </div>
-          <div class="options-form-div">
             <p>Algorithme :</p>
-            <select name="algorithm" id="algorithm" [(ngModel)]="algorithm">
+            <select name="algorithm" id="algorithm" [(ngModel)]="algorithm" (change)="onChange($event.target.value)">
               <option value="s1">Simplexe 1</option>
               <option value="s2">Simplexe 2</option>
               <option value="djikstra">Djikstra OSMNX</option>
             </select>
+          </div>
+          <div class="options-form-div" *ngIf="canSimulateTrafic">
+            <input type="checkbox" id="trafic" [(ngModel)]="trafic" />
+            <p>Trafic</p>
           </div>
           <div class="options-form-div">
             <p>Ville:</p>
@@ -45,8 +45,8 @@
     </div>
   </div>
 
-  <div id="btn-search">
-    <i class="material-icons" (click)="search()">search</i>
+  <div id="btn-search" (click)="search()">
+    <i class="material-icons">search</i>
   </div>
 </div>
 
