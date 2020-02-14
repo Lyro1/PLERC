@@ -101,6 +101,7 @@ def get_path(lp, vertices):
 
 
 def get_detailled_path(path, edges):
+    # print("path : " + str(path))
     detailled_path = []
     source = None
     for node in path:
@@ -111,6 +112,7 @@ def get_detailled_path(path, edges):
                 if edge[0] == source and edge[1] == node:
                     detailled_path.append(edge)
             source = node
+    # print("detailled path : " + str(detailled_path))
     return detailled_path
 
 

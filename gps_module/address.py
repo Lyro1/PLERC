@@ -3,7 +3,7 @@ from geopy.geocoders import Nominatim
 def gps_from_address(address):
     geo_locator = Nominatim(timeout=10)
     location = geo_locator.geocode(address)
-    return location.longitude, location.latitude
+    return location.latitude, location.longitude
 
 def address_from_gps(latitude, longitude):
     geo_locator = Nominatim(timeout=10)

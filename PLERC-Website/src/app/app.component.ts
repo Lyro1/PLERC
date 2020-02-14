@@ -53,6 +53,7 @@ export class AppComponent {
       this.notifier.notify('error', 'Vous devez spécifier une adresse d\'arrivée');
       this.wrongEnd = true;
     } else {
+      this.foundPath = false;
       this.wrongStart = false;
       this.wrongEnd = false;
       this.searching = true;

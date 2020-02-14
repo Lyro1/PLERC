@@ -37,15 +37,15 @@ while True:
     except geopy.exc.GeocoderUnavailable:
         continue
 
+originPoint = ox.get_nearest_node(G2, origin)
+destinationPoint = ox.get_nearest_node(G2, destination)
 
-
+path = nx.shortest_path(G2, originPoint, destinationPoint)
+print("NetworkX Shortest Path : " + str(path))
+path = lp.get_shortest_path(G2, origin, destination)
+print("Get Shortest Path : " + str(path))
 path, weight, weight_realtime = lp.get_shortest_path_realtime(G2, origin, destination)
-print(get_html_from_path(G2, path))
+print("Get Shortest Path Realtime : " + str(path))
 
-#chemin que l'on veut emprinter 
 # print(get_html_from_path(G2, path))
 
-# path_details = lp.get_detailled_path(path, G2.edges(data=True))
-#le plus court chemin avec les details de cotes
-
-#print(affiche_time(time))

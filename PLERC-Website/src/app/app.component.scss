@@ -140,9 +140,9 @@
 .sidebar {
   position: fixed;
   right: -350px;
-  top: 200px;
+  top: 220px;
   width: 350px;
-  height: calc(100vh - 200px);
+  height: calc(100vh - 220px);
   background-color: white;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   z-index: 8;
@@ -209,8 +209,8 @@
 
 #map {
   width: calc(100% - 350px);
-  height: calc(100vh - 200px);
-  margin-top: 200px;
+  height: calc(100vh - 220px);
+  margin-top: 220px;
   border: none;
   z-index: 6;
 }

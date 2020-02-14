@@ -46,7 +46,9 @@ def path(request, trafic, ville, source, destination, algo):
         else:
             path = lp.get_shortest_path(graph, local_gps(ville, source), local_gps(ville, destination))
     else:
-        path = nx.shortest_path(graph, local_gps(ville, source), local_gps(ville, destination))
+        origin = ox.get_nearest_node(graph, local_gps(ville, source))
+        dest = ox.get_nearest_node(graph, local_gps(ville, destination))
+        path = nx.shortest_path(graph, origin, dest)
     html = save.get_html_from_path(graph, path, trafic == "trafic")
     try:
         os.remove('api/template/path.html')
@@ -67,7 +69,9 @@ def path_data(request, trafic, ville, source, destination, algo):
         else:
             path = lp.get_shortest_path(graph, local_gps(ville, source), local_gps(ville, destination))
     else:
-        path = nx.shortest_path(graph, local_gps(ville, source), local_gps(ville, destination))
+        origin = ox.get_nearest_node(graph, local_gps(ville, source))
+        dest = ox.get_nearest_node(graph, local_gps(ville, destination))
+        path = nx.shortest_path(graph, origin, dest)
     detailed_path = lp.get_detailled_path(path, graph.edges(data=True))
     length, speed, path_time = stats.get_path_stats(detailed_path)
     res["length"] = length

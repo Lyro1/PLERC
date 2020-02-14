@@ -53,6 +53,7 @@ def will_arrive(time):
 
 
 def get_path_stats(path):
+    print("get_path_stats(" + str(path) + ")")
     length = length_way(path)
     speed = speed_way(path)
     return length, speed, time_way(length/1000, speed)
