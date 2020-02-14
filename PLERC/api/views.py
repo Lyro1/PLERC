@@ -38,22 +38,36 @@ def local_gps(ville, address):
 
 
 def path(request, trafic, ville, source, destination, algo):
+
     if city != ville:
         load_graph(ville)
+
+    weights = None
+    weights_realtime = None
+    path = None
     if algo != "djikstra":
         if trafic == "trafic":
-            path = lp.get_shortest_path_realtime(graph, local_gps(ville, source), local_gps(ville, destination))
+            path_realtime = lp.get_shortest_path_realtime(graph, local_gps(ville, source), local_gps(ville, destination))
+            path = path_realtime[0]
+            weights = path_realtime[1]
+            weights_realtime = path_realtime[2]
         else:
             path = lp.get_shortest_path(graph, local_gps(ville, source), local_gps(ville, destination))
     else:
         origin = ox.get_nearest_node(graph, local_gps(ville, source))
         dest = ox.get_nearest_node(graph, local_gps(ville, destination))
         path = nx.shortest_path(graph, origin, dest)
-    html = save.get_html_from_path(graph, path, trafic == "trafic")
+
+    if trafic == "trafic":
+        html = save.get_html_from_path(graph, path, True, weights, weights_realtime)
+    else:
+        html = save.get_html_from_path(graph, path)
+
     try:
         os.remove('api/template/path.html')
     except FileNotFoundError:
         pass
+
     f = open('api/template/path.html', 'w+')
     f.write(html)
     return render(request, 'path.html')
@@ -61,17 +75,26 @@ def path(request, trafic, ville, source, destination, algo):
 
 def path_data(request, trafic, ville, source, destination, algo):
     res = {}
+    weights = None
+    weights_realtime = None
+    path = None
+
     if city != ville:
         load_graph(ville)
+
     if algo != "djikstra":
         if trafic == "trafic":
-            path = lp.get_shortest_path_realtime(graph, local_gps(ville, source), local_gps(ville, destination))
+            path_realtime = lp.get_shortest_path_realtime(graph, local_gps(ville, source), local_gps(ville, destination))
+            path = path_realtime[0]
+            weights = path_realtime[1]
+            weights_realtime = path_realtime[2]
         else:
             path = lp.get_shortest_path(graph, local_gps(ville, source), local_gps(ville, destination))
     else:
         origin = ox.get_nearest_node(graph, local_gps(ville, source))
         dest = ox.get_nearest_node(graph, local_gps(ville, destination))
         path = nx.shortest_path(graph, origin, dest)
+
     detailed_path = lp.get_detailled_path(path, graph.edges(data=True))
     length, speed, path_time = stats.get_path_stats(detailed_path)
     res["length"] = length
