@@ -48,7 +48,13 @@ def affiche_time(time):
 def will_arrive(time):
     now = datetime.now()
     hour = int(now.strftime("%H")) + int(time)
-    minutes = int(now.strftime("%M")) + int((time % 1) * 100)
+    minutes = int((time % 1) * 100) + int(now.strftime("%M"))
+    print("minutes = " + str(minutes))
+    if minutes >= 60:
+        hour += 1
+        minutes -= 60
+    print("minutes = " + str(minutes))
+    print(str(hour) + "h" + str(minutes))
     return str(hour) + "h" + str(minutes)
 
 
