@@ -34,6 +34,11 @@
             <input type="checkbox" id="trafic" [(ngModel)]="trafic" />
             <p>Trafic</p>
           </div>
+          <div class="options-form-div" *ngIf="canSimulateTrafic">
+            <input type="range" id="trafic-coef" name="traficCoef"
+                   min="0" max="10">
+            <p>Taux de trafic</p>
+          </div>
           <div class="options-form-div">
             <p>Ville:</p>
             <input type="text" [(ngModel)]="town" />
