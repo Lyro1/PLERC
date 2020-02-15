@@ -14,15 +14,15 @@ export class PlercService {
   constructor(private appConfigService: AppConfigService,
               private http: HttpClient) {}
 
-  public getPath(trafic: string, town: string, start: string, end: string, algo: string) {
+  public getPath(traficCoef: number, town: string, start: string, end: string, algo: string) {
     return this.http.get(
-      `${this.appConfigService.config.api}/path/${trafic}/${town}/${start}/${end}/${algo}`,
+      `${this.appConfigService.config.api}/path/${traficCoef}/${town}/${start}/${end}/${algo}`,
       {observe: 'response'}
     );
   }
 
-  public getPathData(trafic: string, town: string, start: string, end: string, algo: string): Observable<PathDataModel> {
-    return this.http.get<PathDataModel>(` ${this.appConfigService.config.api}/path/${trafic}/${town}/${start}/${end}/${algo}/data`);
+  public getPathData(traficCoef: number, town: string, start: string, end: string, algo: string): Observable<PathDataModel> {
+    return this.http.get<PathDataModel>(` ${this.appConfigService.config.api}/path/${traficCoef}/${town}/${start}/${end}/${algo}/data`);
   }
 
 }
