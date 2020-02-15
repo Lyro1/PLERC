@@ -17,12 +17,10 @@ def get_shortest_path(graph, origin, destination):
     return sort_path(chemin, nodes[origin_node][0], nodes[destination_node][0])
 
 
-def get_shortest_path_realtime(graph, origin, destination, nb_paths=20, nb_drivers=100, repartition=4):
+def get_shortest_path_realtime(graph, origin, destination, traficCoef=1000):
     nodes = get_nodes(graph)
-    paths = trafic.getRandomPaths(graph, nb_paths)
-    drivers = trafic.generateFakeDrivers(paths, nb_drivers, repartition)
     vertices = get_edges(graph)
-    vertices_realtime = get_edges_realtime(graph, drivers, paths)
+    vertices_realtime = get_edges_realtime_2(graph, traficCoef)
     M, w, dict_nodes, dict_vertices = build_different_matrices(nodes, vertices_realtime)
     origin_node = dict_nodes[ox.get_nearest_node(graph, (origin[0], origin[1]), method='euclidean')]
     destination_node = dict_nodes[ox.get_nearest_node(graph, (destination[0], destination[1]), method='euclidean')]

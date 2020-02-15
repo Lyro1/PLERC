@@ -1,3 +1,5 @@
+import random
+
 def build_matrix_dictionary(nodes):
     dictionary = {}
     i = 0
@@ -88,6 +90,19 @@ def get_edges_realtime(G, drivers, paths):
                     edges[h] = (path_edge[0], path_edge[1], time * (1 + path_drivers * 0.05))
         i += 1
         h += 1
+    return edges
+
+
+def get_edges_realtime_2(G, trafic):
+    edges = get_edges(G)
+    drivers = len(edges) * 2 * trafic
+    step = len(edges) / drivers - 1
+    for i in range(0, len(edges)):
+        nb_drivers_edge = random.randrange(0, drivers // 10)
+        drivers -= nb_drivers_edge
+        print(str(nb_drivers_edge) + " conducteurs sur cette arrete, " + str(drivers) + " conducteurs restants")
+        edges[i] = edges[i][0], edges[i][1], edges[i][2] * (1 + nb_drivers_edge * 0.1)
+        i += step
     return edges
 
 

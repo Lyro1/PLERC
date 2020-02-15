@@ -45,19 +45,18 @@ def colorEdgesInRealTime(graph, edges_weight, edges_weight_realtime):
         edge_weight_realtime = edges_weight_realtime[i][2]
         edge_data = edge[2]
         i += 1
-        color = "green"
-        if edge_weight_realtime / edge_weight > 2:
-            color = "red"
-        elif edge_weight_realtime / edge_weight > 1.5:
+        if edge_weight_realtime / edge_weight > 1.5:
             color = "orange"
-        if "geometry" in edge_data:
-            lines.append(ox.plot.make_folium_polyline(edge_data, color, 4, 0.4))
+            if edge_weight_realtime / edge_weight > 2:
+                color = "red"
+            if "geometry" in edge_data:
+                lines.append(ox.plot.make_folium_polyline(edge_data, color, 4, 0.4))
     return lines
 
 def getColoredLines(graph, nb_path=200, nb_drivers=1000):
-    paths = getRandomPaths(graph, nb_path)
-    drivers = generateFakeDrivers(paths, nb_drivers)
+    # paths = getRandomPaths(graph, nb_path)
+    # drivers = generateFakeDrivers(paths, nb_drivers)
     edges_weight = matrix.get_edges(graph)
-    edges_weight_realtime = matrix.get_edges_realtime(graph, drivers, paths)
+    edges_weight_realtime = matrix.get_edges_realtime_2(graph, nb_drivers)
     lines = colorEdgesInRealTime(graph, edges_weight, edges_weight_realtime)
     return lines
