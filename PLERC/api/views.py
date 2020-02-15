@@ -47,7 +47,8 @@ def path(request, trafic, ville, source, destination, algo):
     path = None
     if algo != "djikstra":
         if trafic == "trafic":
-            path_realtime = lp.get_shortest_path_realtime(graph, local_gps(ville, source), local_gps(ville, destination))
+            path_realtime = lp.get_shortest_path_realtime(graph, local_gps(ville, source), local_gps(ville, destination),
+                                                          traficCoef=trafic)
             path = path_realtime[0]
             weights = path_realtime[1]
             weights_realtime = path_realtime[2]
@@ -75,8 +76,6 @@ def path(request, trafic, ville, source, destination, algo):
 
 def path_data(request, trafic, ville, source, destination, algo):
     res = {}
-    weights = None
-    weights_realtime = None
     path = None
 
     if city != ville:
@@ -84,10 +83,9 @@ def path_data(request, trafic, ville, source, destination, algo):
 
     if algo != "djikstra":
         if trafic == "trafic":
-            path_realtime = lp.get_shortest_path_realtime(graph, local_gps(ville, source), local_gps(ville, destination))
+            path_realtime = lp.get_shortest_path_realtime(graph, local_gps(ville, source), local_gps(ville, destination),
+                                                          traficCoef=trafic)
             path = path_realtime[0]
-            weights = path_realtime[1]
-            weights_realtime = path_realtime[2]
         else:
             path = lp.get_shortest_path(graph, local_gps(ville, source), local_gps(ville, destination))
     else:
