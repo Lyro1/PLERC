@@ -30,8 +30,8 @@ export class AppComponent {
   public searching = false;
   public optionsOpen = false;
   public canSimulateTrafic = true;
+  public traficCoef = 0;
 
-  public trafic = false;
   public algorithm = 's1';
   public town = 'Biars-sur-Cere';
 
@@ -59,23 +59,20 @@ export class AppComponent {
       this.wrongStart = false;
       this.wrongEnd = false;
       this.searching = true;
-      this.getPath(this.trafic, this.town, this.start, this.end, this.algorithm);
-      this.getPathData(this.trafic, this.town, this.start, this.end, this.algorithm);
+      this.url = 'about:blank';
+      changeIframeSrc(this.url);
+      this.getPath(this.traficCoef, this.town, this.start, this.end, this.algorithm);
+      this.getPathData(this.traficCoef, this.town, this.start, this.end, this.algorithm);
     }
   }
 
-  public getPath(trafic: boolean, town: string, start: string, end: string, algo: string) {
-    console.log(trafic);
-    let enableTrafic = 'trafic';
-    if (!trafic) {
-      enableTrafic = 'no-trafic';
-    }
-    this.api.getPath(enableTrafic, town, start, end, algo)
+  public getPath(traficCoef: number, town: string, start: string, end: string, algo: string) {
+    this.api.getPath(traficCoef, town, start, end, algo)
       .pipe(finalize(() => {this.searching = false; this.foundPath = true; }))
       .subscribe(() => {
       }, (error: HttpErrorResponse) => {
         if (error.status === 200) {
-          this.url = this.appConfigService.config.api + '/path/' + enableTrafic + '/' + town + '/' + start + '/' + end + '/' + algo;
+          this.url = this.appConfigService.config.api + '/path/' + traficCoef + '/' + town + '/' + start + '/' + end + '/' + algo;
           changeIframeSrc(this.url);
         } else {
           this.url = 'about:blank';
@@ -84,12 +81,8 @@ export class AppComponent {
       });
   }
 
-  public getPathData(trafic: boolean, town: string, start: string, end: string, algo: string) {
-    let enableTrafic = 'trafic';
-    if (!trafic) {
-      enableTrafic = 'no-trafic';
-    }
-    this.api.getPathData(enableTrafic, town, start, end, algo)
+  public getPathData(traficCoef: number, town: string, start: string, end: string, algo: string) {
+    this.api.getPathData(traficCoef, town, start, end, algo)
       .pipe()
       .subscribe((projection: PathDataModel) => {
         this.pathData = projection;
