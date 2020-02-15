@@ -1,7 +1,7 @@
 import osmnx as ox
+import networkx as nx
 import gps_module.address as gps
 import linear_program_module.linear_program as lp
-import utils.test as test
 import geopy
 import pytest
 
@@ -31,24 +31,14 @@ while True:
 
 G2_opti = ox.simplify_graph(G2)
 
+originPoint = ox.get_nearest_node(G2, origin)
+destinationPoint = ox.get_nearest_node(G2, destination)
 
 def test_nx_opti_shortest_path():
-    fig, ax = ox.plot_graph_route(G2_opti, test.get_nx_shortest_path(G2_opti, origin, destination), fig_height=20, fig_width=20)
+    path1 = nx.shortest_path(G2, originPoint, destinationPoint)
 
-"""
-def test_nx_shortest_path():
-    fig, ax = ox.plot_graph_route(G2, test.get_nx_shortest_path(G2, origin, destination), fig_height=20, fig_width=20)
-"""
 
 def test_our_opti_shortest_path():
-    fig, ax = ox.plot_graph_route(G2_opti, lp.get_shortest_path(G2_opti, origin, destination), fig_height=20, fig_width=20)
+    path2 = lp.get_shortest_path(G2, origin, destination)
 
-"""
-def test_our_shortest_path():
-    fig, ax = ox.plot_graph_route(G2, lp.get_shortest_path(G2, origin, destination), fig_height=20, fig_width=20)
-"""
 
-"""
-def test_give_same_path():
-    assert test.compare_shortest_paths(G2,origin,destination)
-"""
