@@ -59,7 +59,7 @@ def path(request, trafic, ville, source, destination, algo):
         dest = ox.get_nearest_node(graph, local_gps(ville, destination))
         path = nx.shortest_path(graph, origin, dest)
 
-    if trafic == "trafic":
+    if trafic:
         html = save.get_html_from_path(graph, path, True, weights, weights_realtime)
     else:
         html = save.get_html_from_path(graph, path)
