@@ -100,7 +100,6 @@ def get_edges_realtime_2(G, trafic):
     for i in range(0, len(edges)):
         nb_drivers_edge = random.randrange(0, drivers // 10)
         drivers -= nb_drivers_edge
-        print(str(nb_drivers_edge) + " conducteurs sur cette arrete, " + str(drivers) + " conducteurs restants")
         edges[i] = edges[i][0], edges[i][1], edges[i][2] * (1 + nb_drivers_edge * 0.1)
         i += step
     return edges
@@ -116,7 +115,6 @@ def get_path(lp, vertices):
 
 
 def get_detailled_path(path, edges):
-    # print("path : " + str(path))
     detailled_path = []
     source = None
     for node in path:
@@ -127,7 +125,6 @@ def get_detailled_path(path, edges):
                 if edge[0] == source and edge[1] == node:
                     detailled_path.append(edge)
             source = node
-    # print("detailled path : " + str(detailled_path))
     return detailled_path
 
 

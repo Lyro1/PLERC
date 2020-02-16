@@ -93,16 +93,13 @@ export class AppComponent {
   }
 
   private displayTime(time: number) {
-    const hours = Math.floor(time);
-    const minutes = Math.ceil((time % 1) * 100);
-    let txt = '';
-    if (hours > 0) {
-      txt = hours.toString() + 'h';
+    const hour = Math.floor(time / 3600);
+    const minutes = Math.floor(((time / 3600) % 1) * 60);
+    let res = '';
+    if (hour > 0) {
+      res += hour + 'h';
     }
-    if (minutes > 0) {
-      txt = txt + minutes.toString() + 'min';
-    }
-    return txt;
+    return res + minutes + 'min';
   }
 
   private displayLength(length: number) {

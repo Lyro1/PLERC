@@ -8,6 +8,7 @@ def save_path_to_png(graph, path, filename, width=20, height=20):
 
 
 def get_html_from_path(graph, path, traficEnabled=False, weight=None, weight_realtime=None):
+    print(path)
     folium_map = ox.plot.plot_route_folium(graph, path, route_color='#0000FF')
     if traficEnabled:
         if weight_realtime is None or weight is None:

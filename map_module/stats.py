@@ -1,7 +1,5 @@
-import linear_program_module.matrix as matrix
-import time
-from time import strftime
 from datetime import datetime
+import time
 
 
 def length_way(list_of_edges):
@@ -26,13 +24,11 @@ def speed_way(list_of_edges):
     return speed_total / count
 
 
-def time_way(length, speed, weights_realtime=None):
+def time_way(length, speed, traficCoef):
     if speed == 0:
         raise Exception('Speed can\'t be null')
-    time = length/(speed/3.6)
-    if weights_realtime is not None:
-        time *= 1.6
-    return time
+    time = length/(speed/3600)
+    return time * (1 + traficCoef/10)
 
 
 def affiche_time(time):
@@ -45,21 +41,20 @@ def affiche_time(time):
     return tab
 
 
-def will_arrive(time):
-    now = datetime.now()
-    hour = int(now.strftime("%H")) + int(time)
-    minutes = int((time % 1) * 100) + int(now.strftime("%M"))
-    print("minutes = " + str(minutes))
-    if minutes >= 60:
-        hour += 1
-        minutes -= 60
-    print("minutes = " + str(minutes))
-    print(str(hour) + "h" + str(minutes))
-    return str(hour) + "h" + str(minutes)
+def will_arrive(duration):
+    now = time.time()
+    print("now = " + str(now))
+    print("duration = " + str(duration))
+    arrive = now + duration
+    res = datetime.fromtimestamp(arrive)
+    minutes_str = ""
+    if res.minute < 10:
+        minutes_str = "0"
+    return str(res.hour) + "h" + minutes_str + str(res.minute)
 
 
-def get_path_stats(path, weights_realtime=None):
+def get_path_stats(path, traficCoef):
     length = length_way(path)
     speed = speed_way(path)
-    return length, speed, time_way(length/1000, speed, weights_realtime)
+    return length, speed, time_way(length/1000, speed, traficCoef)
 

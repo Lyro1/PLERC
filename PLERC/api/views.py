@@ -93,7 +93,7 @@ def path_data(request, trafic, ville, source, destination, algo):
         path = nx.shortest_path(graph, origin, dest)
 
     detailed_path = lp.get_detailled_path(path, graph.edges(data=True))
-    length, speed, path_time = stats.get_path_stats(detailed_path)
+    length, speed, path_time = stats.get_path_stats(detailed_path, trafic)
     res["length"] = length
     res["speed"] = speed
     res["time"] = path_time
