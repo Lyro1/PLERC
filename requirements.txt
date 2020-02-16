@@ -10,6 +10,7 @@ cycler==0.10.0
 decorator==4.4.1
 descartes==1.1.0
 Django==3.0.3
+django-cors-headers==3.2.1
 Fiona==1.8.13
 folium==0.10.1
 geographiclib==1.50

@@ -17,7 +17,7 @@ def load_graph(city_name):
     global graph
     global city
     graph = ox.simplify_graph(ox.graph_from_place(
-        city_name,
+        city_name + " France",
         simplify=False,
         retain_all=True,
         network_type='drive',
